@@ -168,6 +168,7 @@ private fun Feedback() {
     }
 }
 
+@Preview
 @Composable
 private fun Theme() {
     Column(
@@ -188,39 +189,13 @@ private fun Theme() {
         ) {
             Column{
                 Text(
-                    text = "Dark Theme",
+                    text = "System Theme",
                     style = MaterialTheme.typography.displayMedium,
                     color = TextColorAccent
                 )
                 Spacer(Modifier.height(5.dp))
                 Text(
-                    text = "Join the Dark Side!",
-                    style = MaterialTheme.typography.displaySmall,
-                    color = TextColorAccent
-                )
-            }
-            Spacer(Modifier.weight(1f))
-            Image(
-                painter = painterResource(R.drawable.ic_check),
-                contentDescription = "is true?"
-            )
-
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column{
-                Text(
-                    text = "Light Theme",
-                    style = MaterialTheme.typography.displayMedium,
-                    color = TextColorAccent
-                )
-                Spacer(Modifier.height(5.dp))
-                Text(
-                    text = "Let there be Light!",
+                    text = "The same as in your system",
                     style = MaterialTheme.typography.displaySmall,
                     color = TextColorAccent
                 )
