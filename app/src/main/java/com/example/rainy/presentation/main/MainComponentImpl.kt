@@ -1,0 +1,62 @@
+package com.example.rainy.presentation.main
+
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.mvikotlin.core.instancekeeper.getStore
+import com.arkivanov.mvikotlin.extensions.coroutines.labels
+import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
+import com.example.rainy.domain.entity.Astronomy
+import com.example.rainy.domain.entity.ForecastDay
+import com.example.rainy.domain.entity.InfoData
+import com.example.rainy.domain.entity.Weather
+import com.example.rainy.presentation.utils.componentScope
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+class MainComponentImpl @AssistedInject constructor(
+    private val storeFactory: MainStoreFactory,
+    @Assisted("componentContext") componentContext: ComponentContext,
+    @Assisted("onClickSelectCity") private val clickSelectCity: () -> Unit,
+    @Assisted("onClickSettings") private val clickSettings: () -> Unit,
+    @Assisted("infoData") private val infoData: InfoData,
+): MainComponent, ComponentContext by componentContext {
+
+    private val store = instanceKeeper.getStore {
+        storeFactory.create(infoData, stateKeeper)
+    }
+    private val scope = componentScope()
+
+    init {
+        scope.launch {
+            store.labels.collect { label ->
+                when(label) {
+                    MainStore.Label.ClickSelectCity -> clickSelectCity()
+                    MainStore.Label.ClickSettings -> clickSettings()
+                }
+            }
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override val model: StateFlow<MainStore.State> = store.stateFlow
+
+    override fun onClickSelectCity() = store.accept(MainStore.Intent.ClickSelectCity)
+
+    override fun onClickSettings() = store.accept(MainStore.Intent.ClickSettings)
+
+    @AssistedFactory
+    interface Factory {
+
+        fun create(
+            @Assisted("componentContext") componentContext: ComponentContext,
+            @Assisted("onClickSelectCity") onClickSelectCity: () -> Unit,
+            @Assisted("onClickSettings") onClickSettings: () -> Unit,
+            @Assisted("infoData") infoData: InfoData,
+        ): MainComponentImpl
+
+    }
+
+}

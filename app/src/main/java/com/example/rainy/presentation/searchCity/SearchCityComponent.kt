@@ -1,0 +1,18 @@
+package com.example.rainy.presentation.searchCity
+
+import com.example.rainy.domain.entity.City
+import kotlinx.coroutines.flow.StateFlow
+
+interface SearchCityComponent {
+
+    val model: StateFlow<SearchCityStore.State>
+
+    fun changeSearchQuery(query: String)
+
+    fun onClickBack()
+
+    fun onClickSearch()
+
+    fun onClickCity(city: City)
+
+}
