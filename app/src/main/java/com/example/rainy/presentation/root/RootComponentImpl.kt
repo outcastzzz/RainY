@@ -9,11 +9,8 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.example.rainy.domain.entity.Astronomy
-import com.example.rainy.domain.entity.Forecast
-import com.example.rainy.domain.entity.ForecastDay
 import com.example.rainy.domain.entity.InfoData
 import com.example.rainy.domain.entity.Weather
-import com.example.rainy.domain.useCase.ChangeFavouriteStateUseCase
 import com.example.rainy.presentation.forecast.ForecastComponentImpl
 import com.example.rainy.presentation.main.MainComponentImpl
 import com.example.rainy.presentation.searchCity.SearchCityComponentImpl
@@ -24,7 +21,6 @@ import com.example.rainy.presentation.weather.WeatherComponentImpl
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Job
 import kotlinx.serialization.Serializable
 
 class RootComponentImpl @AssistedInject constructor(

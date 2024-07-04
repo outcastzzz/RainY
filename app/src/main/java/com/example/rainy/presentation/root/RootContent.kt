@@ -11,9 +11,7 @@ import com.example.rainy.presentation.selectCity.SelectCityContent
 import com.example.rainy.presentation.settings.SettingsContent
 import com.example.rainy.presentation.splash.SplashContent
 import com.example.rainy.presentation.theme.RainYTheme
-import com.example.rainy.presentation.weather.WeatherComponent
 import com.example.rainy.presentation.weather.WeatherContent
-import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable

@@ -4,10 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import com.example.rainy.domain.entity.Astronomy
-import com.example.rainy.domain.entity.ForecastDay
 import com.example.rainy.domain.entity.InfoData
-import com.example.rainy.domain.entity.Weather
 import com.example.rainy.presentation.utils.componentScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
