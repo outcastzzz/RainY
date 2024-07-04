@@ -141,31 +141,31 @@ class RootComponentImpl @AssistedInject constructor(
     }
 
     @Serializable
-    sealed interface Config {
+    sealed class Config {
 
         @Serializable
-        data class MainConfig(val infoData: InfoData): Config
+        data class MainConfig(val infoData: InfoData): Config()
 
         @Serializable
-        data class ForecastConfig(val forecast: Weather): Config
+        data class ForecastConfig(val forecast: Weather): Config()
 
         @Serializable
-        data class WeatherConfig(val weather: Weather, val astronomy: Astronomy): Config
+        data class WeatherConfig(val weather: Weather, val astronomy: Astronomy): Config()
 
         @Serializable
-        data class DetailsConfig(val weather: Weather, val astronomy: Astronomy): Config
+        data class DetailsConfig(val weather: Weather, val astronomy: Astronomy): Config()
 
         @Serializable
-        data object SettingsConfig: Config
+        data object SettingsConfig: Config()
 
         @Serializable
-        data class SplashConfig(val lat: Float, val long: Float): Config
+        data class SplashConfig(val lat: Float, val long: Float): Config()
 
         @Serializable
-        data object SelectCityConfig: Config
+        data object SelectCityConfig: Config()
 
         @Serializable
-        data object SearchCity: Config
+        data object SearchCity: Config()
 
     }
 
