@@ -1,7 +1,5 @@
 package com.example.rainy.presentation.root
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.example.rainy.presentation.details.DetailsContent
@@ -13,7 +11,6 @@ import com.example.rainy.presentation.splash.SplashContent
 import com.example.rainy.presentation.theme.RainYTheme
 import com.example.rainy.presentation.weather.WeatherContent
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun RootContent(component: RootComponent) {
 

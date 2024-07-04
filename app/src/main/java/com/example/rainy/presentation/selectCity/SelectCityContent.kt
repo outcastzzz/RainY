@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -44,7 +43,6 @@ import com.example.rainy.domain.entity.City
 import com.example.rainy.presentation.theme.TextColorAccent
 import com.example.rainy.presentation.utils.findIconForCode
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun SelectCityContent(component: SelectCityComponent) {
 
