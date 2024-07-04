@@ -9,7 +9,6 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.example.rainy.domain.entity.InfoData
 import com.example.rainy.domain.useCase.GetCurrentCityNameUseCase
 import com.example.rainy.domain.useCase.LoadAstronomyDataUseCase
-import com.example.rainy.domain.useCase.LoadTodayHourlyForecastUseCase
 import com.example.rainy.domain.useCase.LoadWeatherForCityUseCase
 import com.example.rainy.presentation.splash.SplashStore.Intent
 import com.example.rainy.presentation.splash.SplashStore.Label

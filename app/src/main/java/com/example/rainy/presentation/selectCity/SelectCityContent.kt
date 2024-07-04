@@ -11,7 +11,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -76,7 +75,6 @@ fun SelectCityContent(component: SelectCityComponent) {
 
 }
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun CityItem(
@@ -170,87 +168,6 @@ private fun CityItem(
             }
         }
     }
-//    LaunchedEffect(swipeState.currentValue) {
-//        if (swipeState.currentValue == SwipeToDismissBoxValue.EndToStart) {
-//            onSwipe(city)
-//        }
-//    }
-
-
-
-
-//    val swipeState = rememberSwipeToDismissBoxState()
-//    lateinit var icon: ImageVector
-//    lateinit var alignment: Alignment
-//    val color: Color
-//
-//    when (swipeState.dismissDirection) {
-//        SwipeToDismissBoxValue.EndToStart -> {
-//            icon = ImageVector.vectorResource(R.drawable.ic_delete)
-//            alignment = Alignment.CenterEnd
-//            color = MaterialTheme.colorScheme.primary
-//        }
-//
-//        SwipeToDismissBoxValue.StartToEnd -> {
-//            icon = ImageVector.vectorResource(R.drawable.ic_delete)
-//            alignment = Alignment.CenterEnd
-//            color = MaterialTheme.colorScheme.primary
-//        }
-//        SwipeToDismissBoxValue.Settled -> {
-//            icon = ImageVector.vectorResource(R.drawable.ic_delete)
-//            alignment = Alignment.CenterEnd
-//            color = MaterialTheme.colorScheme.primary
-//        }
-//    }
-//
-//    SwipeToDismissBox(
-//        modifier = Modifier.animateContentSize(),
-//        state = swipeState,
-//        backgroundContent = {
-//            Box(
-//                contentAlignment = alignment,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(
-//                        start = 30.dp,
-//                        end = 30.dp,
-//                        top = 20.dp,
-//                        bottom = 20.dp
-//                    )
-//                    .background(color),
-//            ) {
-//                Column(
-//                    verticalArrangement = Arrangement.Center
-//                ) {
-//                    Icon(
-//                        modifier = Modifier
-//                            .minimumInteractiveComponentSize()
-//                            .size(30.dp),
-//                        imageVector = icon,
-//                        contentDescription = null
-//                    )
-//                }
-//
-//            }
-//        }
-//    ) {
-//
-//    }
-//    when (swipeState.currentValue) {
-//        SwipeToDismissBoxValue.EndToStart -> {
-//            onSwipe(city)
-//        }
-//
-//        SwipeToDismissBoxValue.StartToEnd -> {
-//            LaunchedEffect(swipeState) {
-//                onSwipe(city)
-//                swipeState.snapTo(SwipeToDismissBoxValue.Settled)
-//            }
-//        }
-//
-//        SwipeToDismissBoxValue.Settled -> {
-//        }
-//    }
 }
 
 @Composable
@@ -325,7 +242,6 @@ private fun SelectCityError() {
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.Q)
 fun vibrateOnLongPress(context: Context) {
     val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager

@@ -3,8 +3,6 @@ package com.example.rainy.presentation.forecast
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import com.example.rainy.domain.entity.Forecast
-import com.example.rainy.domain.entity.ForecastDay
 import com.example.rainy.domain.entity.Weather
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

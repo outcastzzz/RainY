@@ -24,7 +24,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.rainy.R
-import com.example.rainy.domain.entity.Day
 import com.example.rainy.domain.entity.ForecastDay
 import com.example.rainy.domain.entity.Hour
 import com.example.rainy.presentation.theme.TextColorAccent

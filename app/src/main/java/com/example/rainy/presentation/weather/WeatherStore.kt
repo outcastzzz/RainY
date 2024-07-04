@@ -7,12 +7,9 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.example.rainy.domain.entity.Astronomy
 import com.example.rainy.domain.entity.Weather
-import com.example.rainy.domain.useCase.LoadAstronomyDataUseCase
-import com.example.rainy.domain.useCase.LoadWeatherForCityUseCase
 import com.example.rainy.presentation.weather.WeatherStore.Intent
 import com.example.rainy.presentation.weather.WeatherStore.Label
 import com.example.rainy.presentation.weather.WeatherStore.State
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 interface WeatherStore : Store<Intent, State, Label> {
