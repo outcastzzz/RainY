@@ -5,9 +5,6 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.domain.entity.City
-import com.example.domain.useCase.ChangeFavouriteStateUseCase
-import com.example.domain.useCase.SearchCityUseCase
 import com.example.rainy.presentation.searchCity.SearchCityStore.Intent
 import com.example.rainy.presentation.searchCity.SearchCityStore.Label
 import com.example.rainy.presentation.searchCity.SearchCityStore.State

@@ -1,6 +1,5 @@
 package com.example.rainy.presentation.splash
 
-import com.example.domain.entity.InfoData
 import kotlinx.coroutines.flow.StateFlow
 
 interface SplashComponent {

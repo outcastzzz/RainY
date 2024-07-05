@@ -5,8 +5,6 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.domain.entity.Astronomy
-import com.example.domain.entity.Weather
 import com.example.rainy.presentation.weather.WeatherStore.Intent
 import com.example.rainy.presentation.weather.WeatherStore.Label
 import com.example.rainy.presentation.weather.WeatherStore.State

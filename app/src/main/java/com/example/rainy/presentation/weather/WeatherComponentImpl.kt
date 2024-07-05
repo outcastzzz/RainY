@@ -3,8 +3,6 @@ package com.example.rainy.presentation.weather
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import com.example.domain.entity.Astronomy
-import com.example.domain.entity.Weather
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

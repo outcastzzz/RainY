@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.rainy.R
-import com.example.domain.entity.City
 import com.example.rainy.presentation.theme.TextColorAccent
 import com.example.rainy.presentation.utils.findIconForCode
 

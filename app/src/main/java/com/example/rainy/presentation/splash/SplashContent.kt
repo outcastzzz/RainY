@@ -23,7 +23,6 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.rainy.R
-import com.example.domain.entity.InfoData
 
 @Composable
 fun SplashContent(component: SplashComponent) {

@@ -6,8 +6,6 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.domain.entity.ForecastDay
-import com.example.domain.entity.ForecastObject
 import com.example.rainy.presentation.forecast.ForecastStore.Intent
 import com.example.rainy.presentation.forecast.ForecastStore.Label
 import com.example.rainy.presentation.forecast.ForecastStore.State

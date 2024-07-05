@@ -43,7 +43,6 @@ import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.rainy.R
-import com.example.domain.entity.City
 import com.example.rainy.presentation.theme.TextColorAccent
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,6 +1,5 @@
 package com.example.rainy.presentation.selectCity
 
-import com.example.domain.entity.City
 import kotlinx.coroutines.flow.StateFlow
 
 interface SelectCityComponent {

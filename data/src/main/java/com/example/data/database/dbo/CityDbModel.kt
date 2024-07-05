@@ -2,7 +2,6 @@ package com.example.data.database.dbo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.serialization.Serializable
 
 @Entity(tableName = "city_table")
 data class CityDbModel(

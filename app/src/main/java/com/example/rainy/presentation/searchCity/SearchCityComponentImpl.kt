@@ -4,7 +4,6 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import com.example.domain.entity.City
 import com.example.rainy.presentation.utils.componentScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
