@@ -1,6 +1,6 @@
 package com.example.rainy.presentation.selectCity
 
-import com.example.rainy.domain.entity.City
+import com.example.domain.entity.City
 import kotlinx.coroutines.flow.StateFlow
 
 interface SelectCityComponent {
@@ -11,6 +11,6 @@ interface SelectCityComponent {
 
     fun onClickAddCity()
 
-    fun swipeRemoveCity(city: City)
+    fun swipeRemoveCity(city: com.example.domain.entity.City)
 
 }

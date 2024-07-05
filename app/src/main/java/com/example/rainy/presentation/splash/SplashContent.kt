@@ -23,7 +23,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.rainy.R
-import com.example.rainy.domain.entity.InfoData
+import com.example.domain.entity.InfoData
 
 @Composable
 fun SplashContent(component: SplashComponent) {
@@ -41,7 +41,7 @@ fun SplashContent(component: SplashComponent) {
             SplashStore.State.SplashState.Loading -> SplashLoading()
             is SplashStore.State.SplashState.SuccessLoaded -> SplashStateLoaded(splashState.data.cityName) {
                 component.dataLoaded(
-                    InfoData(
+                    com.example.domain.entity.InfoData(
                         splashState.data.cityName,
                         splashState.data.forecast,
                         splashState.data.weather,

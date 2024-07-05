@@ -4,7 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import com.example.rainy.domain.entity.City
+import com.example.domain.entity.City
 import com.example.rainy.presentation.utils.componentScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -53,7 +53,7 @@ class SearchCityComponentImpl @AssistedInject constructor(
         store.accept(SearchCityStore.Intent.ClickSearch)
     }
 
-    override fun onClickCity(city: City) {
+    override fun onClickCity(city: com.example.domain.entity.City) {
         store.accept(SearchCityStore.Intent.ClickCity(city))
     }
 

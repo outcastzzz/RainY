@@ -6,10 +6,10 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.rainy.domain.entity.City
-import com.example.rainy.domain.useCase.ChangeFavouriteStateUseCase
-import com.example.rainy.domain.useCase.GetFavouriteCitiesUseCase
-import com.example.rainy.domain.useCase.LoadWeatherForCityUseCase
+import com.example.domain.entity.City
+import com.example.domain.useCase.ChangeFavouriteStateUseCase
+import com.example.domain.useCase.GetFavouriteCitiesUseCase
+import com.example.domain.useCase.LoadWeatherForCityUseCase
 import com.example.rainy.presentation.selectCity.SelectCityStore.Intent
 import com.example.rainy.presentation.selectCity.SelectCityStore.Label
 import com.example.rainy.presentation.selectCity.SelectCityStore.State
@@ -89,8 +89,6 @@ class SelectCityStoreFactory @Inject constructor(
 
         data class CitiesLoaded(val cities: List<City>): Action
 
-//        data class CityRemoved(val city: City): Action
-
     }
 
     private sealed interface Msg {
@@ -107,8 +105,6 @@ class SelectCityStoreFactory @Inject constructor(
         data class WeatherError(val cityName: String): Msg
 
         data class WeatherLoading(val cityName: String): Msg
-
-//        data class CityRemoved(val city: City): Msg
 
     }
 
@@ -135,7 +131,6 @@ class SelectCityStoreFactory @Inject constructor(
                     Log.d("Xyi", "Removing city: ${intent.city.name}")
                     changeFavouriteStateUseCase.removeFromFavourite(intent.city.name)
                     publish(Label.SwipeRemoveCity(intent.city))
-//                    dispatch(Msg.CityRemoved(intent.city))
                 }
             }
         }
@@ -151,9 +146,6 @@ class SelectCityStoreFactory @Inject constructor(
                     }
                 }
             }
-//            is Action.CityRemoved -> {
-//                dispatch(Msg.CityRemoved(action.city))
-//            }
         }
 
         private suspend fun loadWeatherForCity(city: City) {
@@ -228,12 +220,6 @@ class SelectCityStoreFactory @Inject constructor(
                     }
                 )
             }
-//            is Msg.CityRemoved -> {
-//                Log.d("SelectCityStore", "Reducer: CityRemoved for ${msg.city.name}")
-//                copy(
-//                    cityItems = cityItems.filter { it.city.name == msg.city.name }
-//                )
-//            }
         }
     }
 }

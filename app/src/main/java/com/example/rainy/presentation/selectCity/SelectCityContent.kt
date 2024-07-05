@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.rainy.R
-import com.example.rainy.domain.entity.City
+import com.example.domain.entity.City
 import com.example.rainy.presentation.theme.TextColorAccent
 import com.example.rainy.presentation.utils.findIconForCode
 
@@ -77,8 +77,8 @@ fun SelectCityContent(component: SelectCityComponent) {
 @Composable
 private fun CityItem(
     cityItem: SelectCityStore.State.CityItem,
-    city: City,
-    onSwipe: (City) -> Unit,
+    city: com.example.domain.entity.City,
+    onSwipe: (com.example.domain.entity.City) -> Unit,
 ) {
 
     Card(

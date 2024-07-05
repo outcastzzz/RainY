@@ -5,8 +5,8 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.rainy.domain.entity.Astronomy
-import com.example.rainy.domain.entity.Weather
+import com.example.domain.entity.Astronomy
+import com.example.domain.entity.Weather
 import com.example.rainy.presentation.weather.WeatherStore.Intent
 import com.example.rainy.presentation.weather.WeatherStore.Label
 import com.example.rainy.presentation.weather.WeatherStore.State
@@ -17,8 +17,8 @@ interface WeatherStore : Store<Intent, State, Label> {
     sealed interface Intent
 
     data class State(
-        val weather: Weather,
-        val astronomy: Astronomy
+        val weather: com.example.domain.entity.Weather,
+        val astronomy: com.example.domain.entity.Astronomy
     )
 
     sealed interface Label
@@ -29,8 +29,8 @@ class WeatherStoreFactory @Inject constructor(
 ) {
 
     fun create(
-        weather: Weather,
-        astronomy: Astronomy
+        weather: com.example.domain.entity.Weather,
+        astronomy: com.example.domain.entity.Astronomy
     ): WeatherStore =
         object : WeatherStore, Store<Intent, State, Label> by storeFactory.create(
             name = "MainStore",
@@ -46,8 +46,8 @@ class WeatherStoreFactory @Inject constructor(
     private sealed interface Action {
 
         data class WeatherLoaded(
-            val weather: Weather,
-            val astronomy: Astronomy
+            val weather: com.example.domain.entity.Weather,
+            val astronomy: com.example.domain.entity.Astronomy
         ): Action
 
     }
@@ -55,8 +55,8 @@ class WeatherStoreFactory @Inject constructor(
     private sealed interface Msg {
 
         data class WeatherLoaded(
-            val weather: Weather,
-            val astronomy: Astronomy
+            val weather: com.example.domain.entity.Weather,
+            val astronomy: com.example.domain.entity.Astronomy
         ): Msg
 
     }

@@ -5,9 +5,9 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.rainy.domain.entity.City
-import com.example.rainy.domain.useCase.ChangeFavouriteStateUseCase
-import com.example.rainy.domain.useCase.SearchCityUseCase
+import com.example.domain.entity.City
+import com.example.domain.useCase.ChangeFavouriteStateUseCase
+import com.example.domain.useCase.SearchCityUseCase
 import com.example.rainy.presentation.searchCity.SearchCityStore.Intent
 import com.example.rainy.presentation.searchCity.SearchCityStore.Label
 import com.example.rainy.presentation.searchCity.SearchCityStore.State
@@ -25,7 +25,7 @@ interface SearchCityStore : Store<Intent, State, Label> {
 
         data object ClickSearch : Intent
 
-        data class ClickCity(val city: City) : Intent
+        data class ClickCity(val city: com.example.domain.entity.City) : Intent
 
     }
 
@@ -44,7 +44,7 @@ interface SearchCityStore : Store<Intent, State, Label> {
 
             data object EmptyResult: SearchState
 
-            data class Loaded(val cities: List<City>): SearchState
+            data class Loaded(val cities: List<com.example.domain.entity.City>): SearchState
 
         }
 
@@ -61,8 +61,8 @@ interface SearchCityStore : Store<Intent, State, Label> {
 
 class SearchCityStoreFactory @Inject constructor(
     private val storeFactory: StoreFactory,
-    private val changeFavouriteStateUseCase: ChangeFavouriteStateUseCase,
-    private val searchCityUseCase: SearchCityUseCase
+    private val changeFavouriteStateUseCase: com.example.domain.useCase.ChangeFavouriteStateUseCase,
+    private val searchCityUseCase: com.example.domain.useCase.SearchCityUseCase
 ) {
 
     fun create(): SearchCityStore =
@@ -87,7 +87,7 @@ class SearchCityStoreFactory @Inject constructor(
 
         data object SearchResultError : Msg
 
-        data class SearchResultLoaded(val cities: List<City>) : Msg
+        data class SearchResultLoaded(val cities: List<com.example.domain.entity.City>) : Msg
 
     }
 
