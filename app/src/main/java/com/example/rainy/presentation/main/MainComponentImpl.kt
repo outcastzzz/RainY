@@ -4,7 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import com.example.rainy.domain.entity.InfoData
+import com.example.domain.entity.InfoData
 import com.example.rainy.presentation.utils.componentScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -18,7 +18,7 @@ class MainComponentImpl @AssistedInject constructor(
     @Assisted("componentContext") componentContext: ComponentContext,
     @Assisted("onClickSelectCity") private val clickSelectCity: () -> Unit,
     @Assisted("onClickSettings") private val clickSettings: () -> Unit,
-    @Assisted("infoData") private val infoData: InfoData,
+    @Assisted("infoData") private val infoData: com.example.domain.entity.InfoData,
 ): MainComponent, ComponentContext by componentContext {
 
     private val store = instanceKeeper.getStore {
@@ -51,7 +51,7 @@ class MainComponentImpl @AssistedInject constructor(
             @Assisted("componentContext") componentContext: ComponentContext,
             @Assisted("onClickSelectCity") onClickSelectCity: () -> Unit,
             @Assisted("onClickSettings") onClickSettings: () -> Unit,
-            @Assisted("infoData") infoData: InfoData,
+            @Assisted("infoData") infoData: com.example.domain.entity.InfoData,
         ): MainComponentImpl
 
     }

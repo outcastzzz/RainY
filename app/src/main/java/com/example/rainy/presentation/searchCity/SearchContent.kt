@@ -43,7 +43,7 @@ import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.rainy.R
-import com.example.rainy.domain.entity.City
+import com.example.domain.entity.City
 import com.example.rainy.presentation.theme.TextColorAccent
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -142,9 +142,7 @@ fun SearchContent(component: SearchCityComponent) {
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         contentPadding = PaddingValues(16.dp)
                     ) {
-                        items(
-                            searchState.cities,
-                        ) { city ->
+                        items(searchState.cities,) { city ->
                             CityCard(
                                 city = city,
                                 onCityClick = { clickCity ->
@@ -163,8 +161,8 @@ fun SearchContent(component: SearchCityComponent) {
 
 @Composable
 private fun CityCard(
-    city: City,
-    onCityClick: (City) -> Unit
+    city: com.example.domain.entity.City,
+    onCityClick: (com.example.domain.entity.City) -> Unit
 ) {
     Card(
         modifier = Modifier

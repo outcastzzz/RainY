@@ -6,8 +6,8 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.rainy.domain.entity.ForecastDay
-import com.example.rainy.domain.entity.ForecastObject
+import com.example.domain.entity.ForecastDay
+import com.example.domain.entity.ForecastObject
 import com.example.rainy.presentation.forecast.ForecastStore.Intent
 import com.example.rainy.presentation.forecast.ForecastStore.Label
 import com.example.rainy.presentation.forecast.ForecastStore.State
@@ -20,8 +20,8 @@ interface ForecastStore : Store<Intent, State, Label> {
 
     @Serializable
     data class State(
-        val hourlyForecast: ForecastDay,
-        val dailyForecast: ForecastObject
+        val hourlyForecast: com.example.domain.entity.ForecastDay,
+        val dailyForecast: com.example.domain.entity.ForecastObject
     )
 
     sealed interface Label
@@ -32,8 +32,8 @@ class ForecastStoreFactory @Inject constructor(
 ) {
 
     fun create(
-        hourlyForecast: ForecastDay,
-        dailyForecast: ForecastObject,
+        hourlyForecast: com.example.domain.entity.ForecastDay,
+        dailyForecast: com.example.domain.entity.ForecastObject,
         stateKeeper: StateKeeper
     ): ForecastStore =
         object : ForecastStore, Store<Intent, State, Label> by storeFactory.create(
@@ -54,8 +54,8 @@ class ForecastStoreFactory @Inject constructor(
     private sealed interface Action {
 
         data class ForecastLoaded(
-            val hourlyForecast: ForecastDay,
-            val dailyForecast: ForecastObject
+            val hourlyForecast: com.example.domain.entity.ForecastDay,
+            val dailyForecast: com.example.domain.entity.ForecastObject
         ): Action
 
     }
@@ -63,8 +63,8 @@ class ForecastStoreFactory @Inject constructor(
     private sealed interface Msg {
 
         data class ForecastLoaded(
-            val hourlyForecast: ForecastDay,
-            val dailyForecast: ForecastObject
+            val hourlyForecast: com.example.domain.entity.ForecastDay,
+            val dailyForecast: com.example.domain.entity.ForecastObject
         ): Msg
 
     }

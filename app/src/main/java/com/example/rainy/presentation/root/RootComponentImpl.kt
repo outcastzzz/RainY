@@ -8,9 +8,9 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
-import com.example.rainy.domain.entity.Astronomy
-import com.example.rainy.domain.entity.InfoData
-import com.example.rainy.domain.entity.Weather
+import com.example.domain.entity.Astronomy
+import com.example.domain.entity.InfoData
+import com.example.domain.entity.Weather
 import com.example.rainy.presentation.forecast.ForecastComponentImpl
 import com.example.rainy.presentation.main.MainComponentImpl
 import com.example.rainy.presentation.searchCity.SearchCityComponentImpl

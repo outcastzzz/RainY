@@ -22,16 +22,6 @@ android {
             useSupportLibrary = true
         }
 
-        val key = property("appId")?.toString() ?: error(
-            "You should add apikey into gradle .properties"
-        )
-        buildConfigField("String", "APP_ID", "\"$key\"")
-
-        val openWeather = property("weatherKey")?.toString() ?: error(
-            "You should add apikey into gradle .properties"
-        )
-        buildConfigField("String", "WEATHER_KEY", "\"$openWeather\"")
-
     }
 
     buildTypes {
@@ -65,6 +55,9 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":domain"))
+    implementation(project(":data"))
 
     // Basic
     implementation(libs.androidx.core.ktx)

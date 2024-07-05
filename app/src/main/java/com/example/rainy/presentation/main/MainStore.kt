@@ -6,7 +6,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.rainy.domain.entity.InfoData
+import com.example.domain.entity.InfoData
 import com.example.rainy.presentation.main.MainStore.Intent
 import com.example.rainy.presentation.main.MainStore.Label
 import com.example.rainy.presentation.main.MainStore.State
@@ -24,7 +24,7 @@ interface MainStore : Store<Intent, State, Label> {
     }
 
     @Serializable
-    data class State(val data: InfoData)
+    data class State(val data: com.example.domain.entity.InfoData)
 
     sealed interface Label {
 
@@ -40,7 +40,7 @@ class MainStoreFactory @Inject constructor(
 ) {
 
     fun create(
-        infoData: InfoData,
+        infoData: com.example.domain.entity.InfoData,
         stateKeeper: StateKeeper
     ): MainStore =
         object : MainStore, Store<Intent, State, Label> by storeFactory.create(
@@ -62,7 +62,7 @@ class MainStoreFactory @Inject constructor(
 
     private sealed interface Msg {
 
-        data class DataLoaded(val data: InfoData): Msg
+        data class DataLoaded(val data: com.example.domain.entity.InfoData): Msg
 
     }
 
@@ -87,7 +87,7 @@ class MainStoreFactory @Inject constructor(
     private object ReducerImpl : Reducer<State, Msg> {
         override fun State.reduce(msg: Msg): State = when(msg) {
             is Msg.DataLoaded -> copy(
-                data = InfoData(
+                data = com.example.domain.entity.InfoData(
                     cityName = msg.data.cityName,
                     forecast = msg.data.forecast,
                     weather = msg.data.weather,

@@ -3,7 +3,7 @@ package com.example.rainy.presentation.forecast
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import com.example.rainy.domain.entity.Weather
+import com.example.domain.entity.Weather
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 class ForecastComponentImpl @AssistedInject constructor(
     private val storeFactory: ForecastStoreFactory,
     @Assisted("componentContext") componentContext: ComponentContext,
-    @Assisted("forecast") private val forecast: Weather
+    @Assisted("forecast") private val forecast: com.example.domain.entity.Weather
 ): ForecastComponent, ComponentContext by componentContext {
 
     private val store = instanceKeeper.getStore { storeFactory.create(
@@ -30,7 +30,7 @@ class ForecastComponentImpl @AssistedInject constructor(
 
         fun create(
             @Assisted("componentContext") componentContext: ComponentContext,
-            @Assisted("forecast") forecast: Weather
+            @Assisted("forecast") forecast: com.example.domain.entity.Weather
         ): ForecastComponentImpl
     }
 

@@ -24,8 +24,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.rainy.R
-import com.example.rainy.domain.entity.ForecastDay
-import com.example.rainy.domain.entity.Hour
+import com.example.domain.entity.ForecastDay
+import com.example.domain.entity.Hour
 import com.example.rainy.presentation.theme.TextColorAccent
 import com.example.rainy.presentation.utils.findIconForCode
 import com.example.rainy.presentation.utils.toSmallDate
@@ -131,7 +131,7 @@ fun ForecastContent(component: ForecastComponent) {
 }
 
 @Composable
-private fun HourlyItem(hour: Hour, icon: Int, modifier: Modifier = Modifier) {
+private fun HourlyItem(hour: com.example.domain.entity.Hour, icon: Int, modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier,
@@ -154,7 +154,7 @@ private fun HourlyItem(hour: Hour, icon: Int, modifier: Modifier = Modifier) {
 
 @Composable
 private fun DailyItem(
-    day: ForecastDay,
+    day: com.example.domain.entity.ForecastDay,
     icon: Int,
     modifier: Modifier = Modifier
 ) {

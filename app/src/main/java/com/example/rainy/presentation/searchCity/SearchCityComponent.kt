@@ -1,6 +1,6 @@
 package com.example.rainy.presentation.searchCity
 
-import com.example.rainy.domain.entity.City
+import com.example.domain.entity.City
 import kotlinx.coroutines.flow.StateFlow
 
 interface SearchCityComponent {
@@ -13,6 +13,6 @@ interface SearchCityComponent {
 
     fun onClickSearch()
 
-    fun onClickCity(city: City)
+    fun onClickCity(city: com.example.domain.entity.City)
 
 }

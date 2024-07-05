@@ -6,10 +6,10 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.rainy.domain.entity.InfoData
-import com.example.rainy.domain.useCase.GetCurrentCityNameUseCase
-import com.example.rainy.domain.useCase.LoadAstronomyDataUseCase
-import com.example.rainy.domain.useCase.LoadWeatherForCityUseCase
+import com.example.domain.entity.InfoData
+import com.example.domain.useCase.GetCurrentCityNameUseCase
+import com.example.domain.useCase.LoadAstronomyDataUseCase
+import com.example.domain.useCase.LoadWeatherForCityUseCase
 import com.example.rainy.presentation.splash.SplashStore.Intent
 import com.example.rainy.presentation.splash.SplashStore.Label
 import com.example.rainy.presentation.splash.SplashStore.State
@@ -125,7 +125,14 @@ class SplashStoreFactory @Inject constructor(
                     val cityName = getCurrentCityNameUseCase(lat, long)
                     val weather = loadWeatherForCityUseCase(lat, long)
                     val astronomy = loadAstronomyDataUseCase(lat, long)
-                    dispatch(Action.DataLoaded(InfoData(cityName, weather.forecast.forecastDay[0], weather, astronomy)))
+                    dispatch(Action.DataLoaded(
+                        InfoData(
+                            cityName,
+                            weather.forecast.forecastDay[0],
+                            weather,
+                            astronomy
+                        )
+                    ))
                 } catch (e: Exception) {
                     dispatch(Action.DataError)
                 }
