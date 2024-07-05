@@ -2,6 +2,7 @@ package com.example.data.repository
 
 import android.util.Log
 import com.example.data.BuildConfig
+import com.example.data.network.ApiRoutes
 import com.example.domain.repository.ForecastRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -15,7 +16,7 @@ class ForecastRepositoryImpl @Inject constructor(
 ): ForecastRepository {
 
     override suspend fun getCurrentCityName(lat: Float, long: Float): String {
-        val response = client.get(com.example.data.network.ApiRoutes.SEARCH_ROUTE) {
+        val response = client.get(ApiRoutes.SEARCH_ROUTE) {
             url {
                 parameters.append("lat", lat.toString())
                 parameters.append("lon", long.toString())
@@ -29,7 +30,7 @@ class ForecastRepositoryImpl @Inject constructor(
 
     override suspend fun loadWeatherForCity(lat: Float, long: Float): com.example.domain.entity.Weather {
         val requestParams = "$lat, $long"
-        return client.get(com.example.data.network.ApiRoutes.FORECAST) {
+        return client.get(ApiRoutes.FORECAST) {
             url {
                 parameters.append("key", BuildConfig.APP_ID)
                 parameters.append("q", requestParams)
@@ -41,7 +42,7 @@ class ForecastRepositoryImpl @Inject constructor(
 
     override suspend fun loadAstronomyData(lat: Float, long: Float): com.example.domain.entity.Astronomy {
         val requestParams = "$lat, $long"
-        return client.get(com.example.data.network.ApiRoutes.ASTRONOMY) {
+        return client.get(ApiRoutes.ASTRONOMY) {
             url {
                 parameters.append("key", BuildConfig.APP_ID)
                 parameters.append("q", requestParams)
@@ -52,7 +53,7 @@ class ForecastRepositoryImpl @Inject constructor(
 
     override suspend fun loadTodayHourlyForecast(lat: Float, long: Float): com.example.domain.entity.Forecast {
         val requestParams = "$lat, $long"
-        return client.get(com.example.data.network.ApiRoutes.FORECAST) {
+        return client.get(ApiRoutes.FORECAST) {
             url {
                 parameters.append("key", BuildConfig.APP_ID)
                 parameters.append("q", requestParams)

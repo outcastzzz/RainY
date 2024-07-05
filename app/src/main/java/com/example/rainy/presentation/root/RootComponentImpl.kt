@@ -11,13 +11,13 @@ import com.arkivanov.decompose.value.Value
 import com.example.domain.entity.Astronomy
 import com.example.domain.entity.InfoData
 import com.example.domain.entity.Weather
-import com.example.rainy.presentation.forecast.ForecastComponentImpl
-import com.example.rainy.presentation.main.MainComponentImpl
-import com.example.rainy.presentation.searchCity.SearchCityComponentImpl
-import com.example.rainy.presentation.selectCity.SelectCityComponentImpl
-import com.example.rainy.presentation.settings.SettingsComponentImpl
-import com.example.rainy.presentation.splash.SplashComponentImpl
-import com.example.rainy.presentation.weather.WeatherComponentImpl
+import com.example.forecast.ForecastComponentImpl
+import com.example.main.MainComponentImpl
+import com.example.searchcity.SearchCityComponentImpl
+import com.example.selectcity.SelectCityComponentImpl
+import com.example.settings.SettingsComponentImpl
+import com.example.splash.SplashComponentImpl
+import com.example.weather.WeatherComponentImpl
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -41,7 +41,7 @@ class RootComponentImpl @AssistedInject constructor(
     override val stack: Value<ChildStack<*, RootComponent.Child>> = childStack(
         source = navigation,
         initialConfiguration = Config.SplashConfig(
-           lat, long
+            lat, long
         ),
         handleBackButton = true,
         serializer = Config.serializer(),

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RainY</string>
+    <string name="search">Search</string>
+    <string name="found_nothing">Found nothing</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="checkout_network_connect">Проверьте подключение к интернету</string>
+</resources>

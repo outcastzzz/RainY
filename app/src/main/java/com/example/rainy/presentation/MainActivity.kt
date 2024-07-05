@@ -17,10 +17,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.core.app.ActivityCompat
 import com.arkivanov.decompose.defaultComponentContext
+import com.example.common.theme.RainYTheme
 import com.example.rainy.RainyApp
 import com.example.rainy.presentation.root.RootComponentImpl
 import com.example.rainy.presentation.root.RootContent
-import com.example.rainy.presentation.theme.RainYTheme
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import javax.inject.Inject
@@ -92,11 +92,13 @@ class MainActivity : ComponentActivity() {
             val long = longitudeState.value
 
             if (lat != null && long != null) {
-                RootContent(component = rootComponentFactory.create(
-                    defaultComponentContext(),
-                    lat = lat,
-                    long = long
-                ))
+                RootContent(
+                    component = rootComponentFactory.create(
+                        defaultComponentContext(),
+                        lat = lat,
+                        long = long
+                    )
+                )
             }
         }
 

@@ -1,6 +1,6 @@
 package com.example.data.network
 
-object ApiRoutes {
+internal object ApiRoutes {
 
     private const val BASE_URL = "https://api.weatherapi.com/v1"
 

@@ -1,0 +1,207 @@
+package com.example.forecast
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.common.R
+import com.example.common.findIconForCode
+import com.example.common.theme.TextColorAccent
+import com.example.common.toSmallDate
+import com.example.common.toTimeFormat
+import com.example.domain.entity.Hour
+import kotlin.math.roundToInt
+
+@Composable
+fun ForecastContent(component: ForecastComponent) {
+
+    val state by component.model.collectAsStateWithLifecycle()
+    val hourlyItems = state.hourlyForecast.hour
+    val dailyItems = state.dailyForecast.forecastDay
+
+    Scaffold (
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary),
+    ) { paddingValues ->
+
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(
+                    top = paddingValues.calculateTopPadding(),
+                ),
+            verticalArrangement = Arrangement.spacedBy(50.dp)
+        ) {
+
+            Text(
+                modifier = Modifier
+                    .padding(start = 30.dp),
+                text = "Forecast",
+                style = MaterialTheme.typography.displayLarge
+            )
+
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth(),
+            ) {
+
+                Text(
+                    modifier = Modifier
+                        .padding(start = 30.dp),
+                    text = "Hourly Forecast",
+                    style = MaterialTheme.typography.displayMedium,
+                    color = TextColorAccent
+                )
+                Spacer(Modifier.height(20.dp))
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(30.dp)
+                ) {
+                    itemsIndexed(hourlyItems) { index, hour ->
+                        val paddingModifier = when(index) {
+                            0 -> Modifier.padding(start = 30.dp)
+                            hourlyItems.size - 1 -> Modifier.padding(end = 30.dp)
+                            else -> Modifier
+                        }
+                        HourlyItem(hour, hour.condition.code.findIconForCode(), paddingModifier)
+                    }
+                }
+
+            }
+
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth(),
+            ) {
+
+                Text(
+                    modifier = Modifier
+                        .padding(start = 30.dp),
+                    text = "Daily Forecast",
+                    style = MaterialTheme.typography.displayMedium,
+                    color = TextColorAccent
+                )
+                Spacer(Modifier.height(20.dp))
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(30.dp)
+                ) {
+                    itemsIndexed(dailyItems) { index, day ->
+                        val paddingModifier = when(index) {
+                            0 -> Modifier.padding(start = 30.dp)
+                            dailyItems.size - 1 -> Modifier.padding(end = 30.dp)
+                            else -> Modifier
+                        }
+                        DailyItem(
+                            day,
+                            day.day.condition.code.findIconForCode(),
+                            paddingModifier
+                        )
+                    }
+                }
+
+            }
+
+        }
+    }
+}
+
+@Composable
+private fun HourlyItem(hour: Hour, icon: Int, modifier: Modifier = Modifier) {
+
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = hour.time.toTimeFormat(),
+            style = MaterialTheme.typography.displaySmall,
+            color = TextColorAccent
+        )
+        Spacer(Modifier.height(10.dp))
+        Image(
+            painter = painterResource(icon),
+            contentDescription = "hourly forecast icon",
+            modifier = Modifier
+                .size(24.dp)
+        )
+    }
+}
+
+@Composable
+private fun DailyItem(
+    day: com.example.domain.entity.ForecastDay,
+    icon: Int,
+    modifier: Modifier = Modifier
+) {
+
+    val minTemp = day.day.minTemp.roundToInt().toString()
+    val maxTemp = day.day.maxTemp.roundToInt().toString()
+
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = day.date.toSmallDate(),
+            style = MaterialTheme.typography.displaySmall,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        Image(
+            painter = painterResource(icon),
+            contentDescription = "daily forecast icon",
+            modifier = Modifier
+                .size(24.dp)
+        )
+        Row {
+            Image(
+                painter = painterResource(R.drawable.ic_max_temp),
+                contentDescription = "daily max temp",
+                modifier = Modifier
+                    .size(11.dp)
+            )
+            Text(
+                text = "$maxTemp°C",
+                style = MaterialTheme.typography.titleSmall,
+                color = TextColorAccent
+            )
+        }
+        Row {
+            Image(
+                painter = painterResource(R.drawable.ic_min_temp),
+                contentDescription = "daily max temp",
+                modifier = Modifier
+                    .size(11.dp)
+            )
+            Text(
+                text = "$minTemp°C",
+                style = MaterialTheme.typography.titleSmall,
+                color = TextColorAccent
+            )
+        }
+    }
+}

@@ -2,13 +2,13 @@ package com.example.rainy.presentation.root
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
-import com.example.rainy.presentation.forecast.ForecastComponent
-import com.example.rainy.presentation.main.MainComponent
-import com.example.rainy.presentation.searchCity.SearchCityComponent
-import com.example.rainy.presentation.selectCity.SelectCityComponent
-import com.example.rainy.presentation.settings.SettingsComponent
-import com.example.rainy.presentation.splash.SplashComponent
-import com.example.rainy.presentation.weather.WeatherComponent
+import com.example.forecast.ForecastComponent
+import com.example.main.MainComponent
+import com.example.searchcity.SearchCityComponent
+import com.example.selectcity.SelectCityComponent
+import com.example.settings.SettingsComponent
+import com.example.splash.SplashComponent
+import com.example.weather.WeatherComponent
 
 interface RootComponent {
 

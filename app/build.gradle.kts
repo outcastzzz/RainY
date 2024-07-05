@@ -58,6 +58,14 @@ dependencies {
 
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":feature:main"))
+    implementation(project(":feature:weather"))
+    implementation(project(":feature:forecast"))
+    implementation(project(":feature:selectCity"))
+    implementation(project(":feature:searchCity"))
+    implementation(project(":feature:settings"))
+    implementation(project(":feature:splash"))
+    implementation(project(":common"))
 
     // Basic
     implementation(libs.androidx.core.ktx)
@@ -86,17 +94,6 @@ dependencies {
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.negotiation)
 
-    // Room
-    implementation (libs.androidx.room.runtime)
-    implementation (libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.kotlinx.coroutines.play.services)
-
     // Dagger
     implementation(kotlin("stdlib-jdk8"))
     implementation(libs.dagger)
@@ -117,10 +114,6 @@ dependencies {
     implementation(libs.decompose.extensions.compose)
     implementation(kotlin("script-runtime"))
 
-    // Gson
     implementation(libs.gson)
-
-    // Lottie
-    implementation(libs.lottie.compose)
 
 }

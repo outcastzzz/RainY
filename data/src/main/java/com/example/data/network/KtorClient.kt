@@ -13,7 +13,7 @@ import io.ktor.serialization.kotlinx.KotlinxSerializationConverter
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
-object KtorClient {
+internal object KtorClient {
 
     @OptIn(ExperimentalSerializationApi::class)
     val client = HttpClient(Android) {
