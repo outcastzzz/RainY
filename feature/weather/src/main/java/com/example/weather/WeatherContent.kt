@@ -24,10 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.common.R
-import com.example.common.findIconForCode
+import com.example.common.utils.findIconForCode
 import com.example.common.theme.displayFontFamily
-import com.example.common.toDateString
-import com.example.common.toTimeString
+import com.example.common.utils.toDateString
+import com.example.common.utils.toTimeString
 import kotlin.math.roundToInt
 
 @Composable

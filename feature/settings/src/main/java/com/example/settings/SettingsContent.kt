@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.common.R
+import com.example.common.theme.TextColorAccent
 
 @Composable
 fun SettingsContent(settingsComponent: SettingsComponent) {
@@ -86,13 +87,13 @@ private fun About() {
             Text(
                 text = "About Weather",
                 style = MaterialTheme.typography.displayMedium,
-                color = com.example.common.theme.TextColorAccent
+                color = TextColorAccent
             )
             Spacer(Modifier.height(5.dp))
             Text(
                 text = "Read a bit more about the app.",
                 style = MaterialTheme.typography.displaySmall,
-                color = com.example.common.theme.TextColorAccent
+                color = TextColorAccent
             )
         }
         Column(
@@ -102,13 +103,13 @@ private fun About() {
             Text(
                 text = "The Team",
                 style = MaterialTheme.typography.displayMedium,
-                color = com.example.common.theme.TextColorAccent
+                color = TextColorAccent
             )
             Spacer(Modifier.height(5.dp))
             Text(
                 text = "Get to know the team that made Weather a reality.",
                 style = MaterialTheme.typography.displaySmall,
-                color = com.example.common.theme.TextColorAccent
+                color = TextColorAccent
             )
         }
     }
@@ -134,13 +135,13 @@ private fun Feedback() {
             Text(
                 text = "Report an Issue",
                 style = MaterialTheme.typography.displayMedium,
-                color = com.example.common.theme.TextColorAccent
+                color = TextColorAccent
             )
             Spacer(Modifier.height(5.dp))
             Text(
                 text = "Facing an issue? Report and we’ll look into it.",
                 style = MaterialTheme.typography.displaySmall,
-                color = com.example.common.theme.TextColorAccent
+                color = TextColorAccent
             )
         }
         Column(
@@ -150,13 +151,13 @@ private fun Feedback() {
             Text(
                 text = "Rate App",
                 style = MaterialTheme.typography.displayMedium,
-                color = com.example.common.theme.TextColorAccent
+                color = TextColorAccent
             )
             Spacer(Modifier.height(5.dp))
             Text(
                 text = "Enjoying the app? Leave a review on the App Store.",
                 style = MaterialTheme.typography.displaySmall,
-                color = com.example.common.theme.TextColorAccent
+                color = TextColorAccent
             )
         }
     }
@@ -185,13 +186,13 @@ private fun Theme() {
                 Text(
                     text = "System Theme",
                     style = MaterialTheme.typography.displayMedium,
-                    color = com.example.common.theme.TextColorAccent
+                    color = TextColorAccent
                 )
                 Spacer(Modifier.height(5.dp))
                 Text(
                     text = "The same as in your system",
                     style = MaterialTheme.typography.displaySmall,
-                    color = com.example.common.theme.TextColorAccent
+                    color = TextColorAccent
                 )
             }
             Spacer(Modifier.weight(1f))
@@ -239,7 +240,7 @@ private fun SettingsTopBar(
             Text(
                 text = "Settings",
                 style = MaterialTheme.typography.displayMedium,
-                color = com.example.common.theme.TextColorAccent
+                color = TextColorAccent
             )
         }
     }

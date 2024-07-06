@@ -6,7 +6,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.common.findIconForCode
+import com.example.common.utils.findIconForCode
 import com.example.domain.entity.City
 import com.example.domain.useCase.ChangeFavouriteStateUseCase
 import com.example.domain.useCase.GetFavouriteCitiesUseCase
