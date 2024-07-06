@@ -1,4 +1,4 @@
-package com.example.common
+package com.example.common.utils
 
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing

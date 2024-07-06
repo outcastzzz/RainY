@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.common.ui.DetailsTextBlock
 import com.example.weather.WeatherComponent
 
 @Composable
@@ -51,72 +52,20 @@ fun DetailsContent(component: WeatherComponent) {
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
 
-                Column {
-                    Text(
-                        "Precipitation",
-                        style = MaterialTheme.typography.displaySmall,
-                    )
-                    Text(
-                        text = "${weather.current.precip} mm",
-                        style = MaterialTheme.typography.displayMedium,
-                    )
-                }
+                val precipitation = weather.current.precip.toString()
+                val windVector = weather.current.windDir
+                val windKph = weather.current.windKph
+                val humidity = weather.current.humidity
+                val visibility = weather.current.visibility
+                val uv = weather.current.uv.toString()
+                val pressure = weather.current.pressureMb.toInt()
 
-                Column {
-                    val windVector = state.weather.current.windDir
-                    Text(
-                        "$windVector Wind",
-                        style = MaterialTheme.typography.displaySmall,
-                    )
-                    Text(
-                        text = "${weather.current.windKph} km/h",
-                        style = MaterialTheme.typography.displayMedium,
-                    )
-                }
-
-                Column {
-                    Text(
-                        "Humidity",
-                        style = MaterialTheme.typography.displaySmall,
-                    )
-                    Text(
-                        text = "${weather.current.humidity} %",
-                        style = MaterialTheme.typography.displayMedium,
-                    )
-                }
-
-                Column {
-                    Text(
-                        "Visibility",
-                        style = MaterialTheme.typography.displaySmall,
-                    )
-                    Text(
-                        text = "${weather.current.visibility} km",
-                        style = MaterialTheme.typography.displayMedium,
-                    )
-                }
-
-                Column {
-                    Text(
-                        "UV",
-                        style = MaterialTheme.typography.displaySmall,
-                    )
-                    Text(
-                        text = "${weather.current.uv}",
-                        style = MaterialTheme.typography.displayMedium,
-                    )
-                }
-
-                Column {
-                    Text(
-                        "Pressure",
-                        style = MaterialTheme.typography.displaySmall,
-                    )
-                    Text(
-                        text = "${weather.current.pressureMb.toInt()} hPa",
-                        style = MaterialTheme.typography.displayMedium,
-                    )
-                }
+                DetailsTextBlock("Precipitation", "$precipitation mm" )
+                DetailsTextBlock("$windVector Wind", "$windKph km/h")
+                DetailsTextBlock("Humidity", "$humidity %")
+                DetailsTextBlock("Visibility", "$visibility km")
+                DetailsTextBlock("UV", uv)
+                DetailsTextBlock("Pressure", "$pressure hPa")
 
             }
         }
