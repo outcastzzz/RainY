@@ -16,7 +16,6 @@ abstract class WeatherDatabase: RoomDatabase() {
 
     abstract fun cityDao(): CityDao
 
-
     companion object {
 
         private var db: WeatherDatabase? = null

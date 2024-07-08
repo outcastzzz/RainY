@@ -5,9 +5,9 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.example.common.theme.RainYTheme
 import com.example.main.MainContent
 import com.example.searchcity.SearchContent
+import com.example.selectcity.SelectCityContent
 import com.example.settings.SettingsContent
 import com.example.splash.SplashContent
-import com.example.selectcity.SelectCityContent
 import com.example.weather.WeatherContent
 import com.example.weather.details.DetailsContent
 

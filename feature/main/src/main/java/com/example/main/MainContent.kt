@@ -27,8 +27,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.common.utils.BackHandler
 import com.example.common.R
+import com.example.common.utils.BackHandler
 import com.example.forecast.ForecastComponent
 import com.example.forecast.ForecastContent
 import com.example.weather.WeatherComponent
