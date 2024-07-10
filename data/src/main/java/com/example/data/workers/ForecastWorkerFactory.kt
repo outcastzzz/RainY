@@ -1,6 +1,7 @@
 package com.example.data.workers
 
 import android.content.Context
+import android.util.Log
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
@@ -18,6 +19,7 @@ class ForecastWorkerFactory @Inject constructor(
     ): ListenableWorker? {
         return when(workerClassName) {
             RefreshForecastDataWorker::class.qualifiedName -> {
+                Log.d("WorkerFactoryTag", "done")
                 val childWorkerFactory = workerProviders[RefreshForecastDataWorker::class.java]?.get()
                 return childWorkerFactory?.create(appContext, workerParameters)
             }
