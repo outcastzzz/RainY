@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
     lateinit var rootComponentFactory: RootComponentImpl.Factory
 
     private val component by lazy {
-        (applicationContext as RainyApp).applicationComponent
+        (applicationContext as RainyApp).component
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
