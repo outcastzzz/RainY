@@ -65,6 +65,7 @@ dependencies {
     implementation(project(":feature:searchCity"))
     implementation(project(":feature:settings"))
     implementation(project(":feature:splash"))
+    implementation(project(":feature:widget"))
     implementation(project(":common"))
 
     // Basic
@@ -113,5 +114,8 @@ dependencies {
     implementation(libs.decompose)
     implementation(libs.decompose.extensions.compose)
     implementation(kotlin("script-runtime"))
+
+    // Work
+    implementation(libs.androidx.work.runtime.ktx)
 
 }
