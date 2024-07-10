@@ -147,19 +147,13 @@ class SplashStoreFactory @Inject constructor(
 
     private class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Msg, Label>() {
         override fun executeIntent(intent: Intent) = when(intent) {
-            is Intent.DataLoaded -> publish(Label.DataLoaded(
-                intent.data
-            ))
+            is Intent.DataLoaded -> publish(Label.DataLoaded(intent.data))
         }
 
 
         override fun executeAction(action: Action) = when(action) {
             Action.DataError -> dispatch(Msg.DataError)
-            is Action.DataLoaded -> dispatch(
-                Msg.DataLoaded(
-                    action.data
-                )
-            )
+            is Action.DataLoaded -> dispatch(Msg.DataLoaded(action.data))
             Action.DataLoading -> dispatch(Msg.DataLoading)
         }
     }
@@ -167,9 +161,7 @@ class SplashStoreFactory @Inject constructor(
     private object ReducerImpl : Reducer<State, Msg> {
         override fun State.reduce(msg: Msg): State = when(msg) {
             Msg.DataError -> copy(splashState = SplashState.Error)
-            is Msg.DataLoaded -> copy(splashState = SplashState.SuccessLoaded(
-                msg.data
-            ))
+            is Msg.DataLoaded -> copy(splashState = SplashState.SuccessLoaded(msg.data))
             Msg.DataLoading -> copy(splashState = SplashState.Loading)
         }
     }

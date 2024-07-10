@@ -1,17 +1,29 @@
 package com.example.rainy
 
 import android.app.Application
+import androidx.work.Configuration
+import com.example.data.workers.ForecastWorkerFactory
 import com.example.rainy.di.ApplicationComponent
 import com.example.rainy.di.DaggerApplicationComponent
+import javax.inject.Inject
 
-class RainyApp: Application() {
+class RainyApp: Application(), Configuration.Provider {
 
-    lateinit var applicationComponent: ApplicationComponent
+    @Inject
+    lateinit var workerFactory: ForecastWorkerFactory
+
+    val component by lazy {
+        DaggerApplicationComponent.factory().create(this)
+    }
 
     override fun onCreate() {
         super.onCreate()
-        applicationComponent = DaggerApplicationComponent.factory().create(this)
+        component.inject(this)
     }
 
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 
 }

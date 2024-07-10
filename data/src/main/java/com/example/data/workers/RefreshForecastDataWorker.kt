@@ -4,6 +4,7 @@ import android.content.Context
 import android.icu.util.Calendar
 import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
@@ -17,6 +18,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.util.concurrent.TimeUnit
@@ -27,7 +29,7 @@ class RefreshForecastDataWorker(
     workerParameters: WorkerParameters,
     private val weatherDao: WeatherDao,
     private val client: HttpClient,
-): CoroutineWorker(context, workerParameters) {
+) : CoroutineWorker(context, workerParameters) {
 
     private val mutex = Mutex()
 
@@ -75,15 +77,16 @@ class RefreshForecastDataWorker(
 
         const val NAME = "RefreshForecastDataWorker"
 
-        fun makeDailyRequest(lat: Float, long: Float) = PeriodicWorkRequestBuilder<RefreshForecastDataWorker>(1, TimeUnit.DAYS)
-            .setInitialDelay(calculateInitialDelay(), TimeUnit.MILLISECONDS)
-            .setInputData(
-                workDataOf(
-                    "lat" to lat,
-                    "long" to long
+        fun makePeriodicRequest(lat: Float, long: Float) =
+            PeriodicWorkRequestBuilder<RefreshForecastDataWorker>(12, TimeUnit.HOURS)
+                .setInitialDelay(calculateInitialDelay(), TimeUnit.MILLISECONDS)
+                .setInputData(
+                    workDataOf(
+                        "lat" to lat,
+                        "long" to long
+                    )
                 )
-            )
-            .build()
+                .build()
 
         private fun calculateInitialDelay(): Long {
             val now = System.currentTimeMillis()
@@ -104,7 +107,7 @@ class RefreshForecastDataWorker(
     class Factory @Inject constructor(
         private val weatherDao: WeatherDao,
         private val client: HttpClient,
-    ): ChildWorkerFactory {
+    ) : ChildWorkerFactory {
         override fun create(
             context: Context,
             workerParameters: WorkerParameters,
