@@ -3,6 +3,7 @@ package com.example.data.repository
 import android.app.Application
 import android.util.Log
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.example.data.BuildConfig
 import com.example.data.database.dao.WeatherDao
@@ -43,7 +44,7 @@ class ForecastRepositoryImpl @Inject constructor(
         workManager.enqueueUniquePeriodicWork(
             RefreshForecastDataWorker.NAME,
             ExistingPeriodicWorkPolicy.UPDATE,
-            RefreshForecastDataWorker.makeDailyRequest(lat, long)
+            RefreshForecastDataWorker.makePeriodicRequest(lat, long)
         )
     }
 
