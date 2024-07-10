@@ -1,8 +1,9 @@
 package di
 
-import android.content.Context
+import android.app.Application
 import com.example.data.database.WeatherDatabase
 import com.example.data.database.dao.CityDao
+import com.example.data.database.dao.WeatherDao
 import com.example.data.network.KtorClient
 import com.example.data.repository.FavouriteRepositoryImpl
 import com.example.data.repository.ForecastRepositoryImpl
@@ -30,8 +31,12 @@ interface DataModule {
     companion object {
 
         @Provides
-        fun provideCityDao(context: Context): CityDao = WeatherDatabase
-            .getInstance(context).cityDao()
+        fun provideCityDao(application: Application): CityDao = WeatherDatabase
+            .getInstance(application).cityDao()
+
+        @Provides
+        fun provideHourlyForecastDao(application: Application): WeatherDao = WeatherDatabase
+            .getInstance(application).hourlyForecastDao()
 
         @Provides
         fun provideKtorClient(): HttpClient = KtorClient.client

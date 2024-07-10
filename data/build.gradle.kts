@@ -82,5 +82,10 @@ dependencies {
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
 
+    // Worker
+    implementation(libs.androidx.work.runtime.ktx)
+
+    // Gson
+    implementation(libs.gson)
 
 }

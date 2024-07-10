@@ -10,7 +10,7 @@ import com.example.common.utils.findIconForCode
 import com.example.domain.entity.City
 import com.example.domain.useCase.ChangeFavouriteStateUseCase
 import com.example.domain.useCase.GetFavouriteCitiesUseCase
-import com.example.domain.useCase.LoadWeatherForCityUseCase
+import com.example.domain.useCase.LoadWeatherForCityExplicitUseCase
 import com.example.selectcity.SelectCityStore.Intent
 import com.example.selectcity.SelectCityStore.Label
 import com.example.selectcity.SelectCityStore.State
@@ -72,7 +72,7 @@ interface SelectCityStore : Store<Intent, State, Label> {
 class SelectCityStoreFactory @Inject constructor(
     private val storeFactory: StoreFactory,
     private val getFavouriteCitiesUseCase: GetFavouriteCitiesUseCase,
-    private val loadWeatherForCityUseCase: LoadWeatherForCityUseCase,
+    private val loadWeatherForCityExplicitUseCase: LoadWeatherForCityExplicitUseCase,
     private val changeFavouriteStateUseCase: ChangeFavouriteStateUseCase
 ) {
 
@@ -151,7 +151,7 @@ class SelectCityStoreFactory @Inject constructor(
         private suspend fun loadWeatherForCity(city: City) {
             dispatch(Msg.WeatherLoading(city.name))
             try {
-                val weather = loadWeatherForCityUseCase(city.lat, city.long)
+                val weather = loadWeatherForCityExplicitUseCase(city.lat, city.long)
                 dispatch(
                     Msg.WeatherLoaded(
                         cityName = city.name,

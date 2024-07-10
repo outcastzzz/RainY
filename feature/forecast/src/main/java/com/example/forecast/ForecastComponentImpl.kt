@@ -16,7 +16,7 @@ class ForecastComponentImpl @AssistedInject constructor(
 ): ForecastComponent, ComponentContext by componentContext {
 
     private val store = instanceKeeper.getStore { storeFactory.create(
-        forecast.forecast.forecastDay[0],
+        forecast.forecast.forecastDay[0].hour,
         forecast.forecast,
         stateKeeper
     ) }

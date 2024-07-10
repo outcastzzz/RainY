@@ -6,8 +6,8 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.domain.entity.ForecastDay
-import com.example.domain.entity.ForecastObject
+import com.example.domain.entity.Forecast
+import com.example.domain.entity.Hour
 import kotlinx.serialization.Serializable
 import javax.inject.Inject
 
@@ -17,8 +17,8 @@ interface ForecastStore : Store<ForecastStore.Intent, ForecastStore.State, Forec
 
     @Serializable
     data class State(
-        val hourlyForecast: ForecastDay,
-        val dailyForecast: ForecastObject
+        val hourlyForecast: List<Hour>,
+        val dailyForecast: Forecast
     )
 
     sealed interface Label
@@ -29,8 +29,8 @@ class ForecastStoreFactory @Inject constructor(
 ) {
 
     fun create(
-        hourlyForecast: ForecastDay,
-        dailyForecast: ForecastObject,
+        hourlyForecast: List<Hour>,
+        dailyForecast: Forecast,
         stateKeeper: StateKeeper
     ): ForecastStore =
         object : ForecastStore, Store<ForecastStore.Intent, ForecastStore.State, ForecastStore.Label> by storeFactory.create(
@@ -51,8 +51,8 @@ class ForecastStoreFactory @Inject constructor(
     private sealed interface Action {
 
         data class ForecastLoaded(
-            val hourlyForecast: ForecastDay,
-            val dailyForecast: ForecastObject
+            val hourlyForecast: List<Hour>,
+            val dailyForecast: Forecast
         ): Action
 
     }
@@ -60,8 +60,8 @@ class ForecastStoreFactory @Inject constructor(
     private sealed interface Msg {
 
         data class ForecastLoaded(
-            val hourlyForecast: ForecastDay,
-            val dailyForecast: ForecastObject
+            val hourlyForecast: List<Hour>,
+            val dailyForecast: Forecast
         ): Msg
 
     }

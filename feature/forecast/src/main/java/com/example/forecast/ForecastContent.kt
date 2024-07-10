@@ -28,14 +28,14 @@ import com.example.common.theme.TextColorAccent
 import com.example.common.utils.findIconForCode
 import com.example.common.utils.toSmallDate
 import com.example.common.utils.toTimeFormat
-import com.example.domain.entity.Hour
+import com.example.domain.entity.ForecastDay
 import kotlin.math.roundToInt
 
 @Composable
 fun ForecastContent(component: ForecastComponent) {
 
     val state by component.model.collectAsStateWithLifecycle()
-    val hourlyItems = state.hourlyForecast.hour
+    val hourlyItems = state.hourlyForecast
     val dailyItems = state.dailyForecast.forecastDay
 
     Scaffold (
@@ -85,7 +85,7 @@ fun ForecastContent(component: ForecastComponent) {
                             hourlyItems.size - 1 -> Modifier.padding(end = 30.dp)
                             else -> Modifier
                         }
-                        HourlyItem(hour, hour.condition.code.findIconForCode(), paddingModifier)
+                        HourlyItem(hour.time, hour.condition.code.findIconForCode(), paddingModifier)
                     }
                 }
 
@@ -122,22 +122,20 @@ fun ForecastContent(component: ForecastComponent) {
                         )
                     }
                 }
-
             }
-
         }
     }
 }
 
 @Composable
-private fun HourlyItem(hour: Hour, icon: Int, modifier: Modifier = Modifier) {
+private fun HourlyItem(hour: Long, icon: Int, modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = hour.time.toTimeFormat(),
+            text = hour.toTimeFormat(),
             style = MaterialTheme.typography.displaySmall,
             color = TextColorAccent
         )
@@ -153,7 +151,7 @@ private fun HourlyItem(hour: Hour, icon: Int, modifier: Modifier = Modifier) {
 
 @Composable
 private fun DailyItem(
-    day: com.example.domain.entity.ForecastDay,
+    day: ForecastDay,
     icon: Int,
     modifier: Modifier = Modifier
 ) {
