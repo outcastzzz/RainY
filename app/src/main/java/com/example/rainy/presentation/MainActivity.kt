@@ -146,9 +146,7 @@ class MainActivity : ComponentActivity() {
     }
 
     companion object {
-
         private const val PERMISSION_ID = 1000
-
     }
 
 }

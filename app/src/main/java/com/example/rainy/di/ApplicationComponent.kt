@@ -1,17 +1,19 @@
 package com.example.rainy.di
 
-import android.content.Context
+import android.app.Application
 import com.example.rainy.presentation.MainActivity
 import dagger.BindsInstance
 import dagger.Component
 import di.DataModule
+import di.WorkerModule
 
 @[
     ApplicationScope
     Component(
         modules = [
             PresentationModule::class,
-            DataModule::class
+            DataModule::class,
+            WorkerModule::class
         ]
     )
 ]
@@ -22,7 +24,7 @@ interface ApplicationComponent {
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance context: Context
+            @BindsInstance application: Application,
         ): ApplicationComponent
     }
 

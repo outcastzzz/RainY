@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.rainy"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -113,7 +113,5 @@ dependencies {
     implementation(libs.decompose)
     implementation(libs.decompose.extensions.compose)
     implementation(kotlin("script-runtime"))
-
-    implementation(libs.gson)
 
 }

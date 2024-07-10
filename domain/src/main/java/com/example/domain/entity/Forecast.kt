@@ -5,13 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Forecast(
-    val location: Location,
-    val current: Current,
-    val forecast: ForecastObject
-)
-
-@Serializable
-data class ForecastObject(
     @SerialName("forecastday")
     val forecastDay: List<ForecastDay>
 )

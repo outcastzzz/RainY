@@ -8,8 +8,9 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.example.domain.entity.InfoData
 import com.example.domain.useCase.GetCurrentCityNameUseCase
+import com.example.domain.useCase.GetWeatherUseCase
 import com.example.domain.useCase.LoadAstronomyDataUseCase
-import com.example.domain.useCase.LoadWeatherForCityUseCase
+import com.example.domain.useCase.LoadWeatherForCityImplicitUseCase
 import com.example.splash.SplashStore.Intent
 import com.example.splash.SplashStore.Label
 import com.example.splash.SplashStore.State
@@ -66,8 +67,9 @@ interface SplashStore : Store<Intent, State, Label> {
 class SplashStoreFactory @Inject constructor(
     private val storeFactory: StoreFactory,
     private val getCurrentCityNameUseCase: GetCurrentCityNameUseCase,
-    private val loadWeatherForCityUseCase: LoadWeatherForCityUseCase,
-    private val loadAstronomyDataUseCase: LoadAstronomyDataUseCase
+    private val loadWeatherForCityImplicitUseCase: LoadWeatherForCityImplicitUseCase,
+    private val loadAstronomyDataUseCase: LoadAstronomyDataUseCase,
+    private val getWeatherUseCase: GetWeatherUseCase,
 ) {
 
     fun create(
@@ -120,10 +122,11 @@ class SplashStoreFactory @Inject constructor(
     ): CoroutineBootstrapper<Action>() {
         override fun invoke() {
             scope.launch {
+                loadWeatherForCityImplicitUseCase(lat, long)
                 dispatch(Action.DataLoading)
                 try {
                     val cityName = getCurrentCityNameUseCase(lat, long)
-                    val weather = loadWeatherForCityUseCase(lat, long)
+                    val weather = getWeatherUseCase(lat, long)
                     val astronomy = loadAstronomyDataUseCase(lat, long)
                     dispatch(
                         Action.DataLoaded(

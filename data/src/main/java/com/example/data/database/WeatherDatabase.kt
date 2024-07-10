@@ -4,17 +4,24 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.data.database.converters.Converters
 import com.example.data.database.dao.CityDao
-import com.example.data.database.dbo.CityDbModel
+import com.example.data.database.dao.WeatherDao
+import com.example.data.database.dbo.CityDbo
+import com.example.data.database.dbo.WeatherDbo
 
 @Database(
-    entities = [CityDbModel::class],
-    version = 2,
+    entities = [CityDbo::class, WeatherDbo::class],
+    version = 4,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class WeatherDatabase: RoomDatabase() {
 
     abstract fun cityDao(): CityDao
+
+    abstract fun hourlyForecastDao(): WeatherDao
 
     companion object {
 
