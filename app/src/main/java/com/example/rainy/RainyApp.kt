@@ -3,7 +3,6 @@ package com.example.rainy
 import android.app.Application
 import androidx.work.Configuration
 import com.example.data.workers.ForecastWorkerFactory
-import com.example.rainy.di.ApplicationComponent
 import com.example.rainy.di.DaggerApplicationComponent
 import javax.inject.Inject
 
