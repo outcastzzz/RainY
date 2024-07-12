@@ -1,10 +1,8 @@
 package com.example.data.workers
 
 import android.content.Context
-import android.icu.util.Calendar
 import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
@@ -18,7 +16,6 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.util.concurrent.TimeUnit
@@ -42,7 +39,6 @@ class RefreshForecastDataWorker(
                 0 -> true
                 else -> false
             }
-
             try {
                 val weather: Weather
                 if (isEmpty) {
@@ -78,8 +74,7 @@ class RefreshForecastDataWorker(
         const val NAME = "RefreshForecastDataWorker"
 
         fun makePeriodicRequest(lat: Float, long: Float) =
-            PeriodicWorkRequestBuilder<RefreshForecastDataWorker>(12, TimeUnit.HOURS)
-                .setInitialDelay(calculateInitialDelay(), TimeUnit.MILLISECONDS)
+            PeriodicWorkRequestBuilder<RefreshForecastDataWorker>(1, TimeUnit.HOURS)
                 .setInputData(
                     workDataOf(
                         "lat" to lat,
@@ -87,21 +82,6 @@ class RefreshForecastDataWorker(
                     )
                 )
                 .build()
-
-        private fun calculateInitialDelay(): Long {
-            val now = System.currentTimeMillis()
-            val calendar = Calendar.getInstance().apply {
-                timeInMillis = now
-                add(Calendar.DAY_OF_YEAR, 1)
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 30)
-                set(Calendar.MILLISECOND, 0)
-            }
-            val timeToRefresh = calendar.timeInMillis - now
-            return timeToRefresh
-        }
-
     }
 
     class Factory @Inject constructor(
