@@ -1,5 +1,6 @@
 package com.example.forecast
 
+import android.icu.util.Calendar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,11 +14,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -29,6 +33,7 @@ import com.example.common.utils.findIconForCode
 import com.example.common.utils.toSmallDate
 import com.example.common.utils.toTimeFormat
 import com.example.domain.entity.ForecastDay
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
@@ -43,6 +48,28 @@ fun ForecastContent(component: ForecastComponent) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
     ) { paddingValues ->
+
+        val listState = rememberLazyListState()
+        val coroutineScope = rememberCoroutineScope()
+
+        val currentTime = System.currentTimeMillis()
+        val currentHour = Calendar.getInstance().apply {
+            timeInMillis = currentTime
+        }.get(Calendar.HOUR_OF_DAY)
+
+        val initialIndex = hourlyItems.indexOfFirst { hour ->
+            val calendar = Calendar.getInstance().apply {
+                timeInMillis = hour.time * 1000
+            }
+            val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+            hourOfDay == currentHour
+        }.takeIf { it >= 0 } ?: 0
+
+        LaunchedEffect(Unit) {
+            coroutineScope.launch {
+                listState.scrollToItem(initialIndex)
+            }
+        }
 
         Column (
             modifier = Modifier
@@ -77,6 +104,7 @@ fun ForecastContent(component: ForecastComponent) {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth(),
+                    state = listState,
                     horizontalArrangement = Arrangement.spacedBy(30.dp)
                 ) {
                     itemsIndexed(hourlyItems) { index, hour ->
