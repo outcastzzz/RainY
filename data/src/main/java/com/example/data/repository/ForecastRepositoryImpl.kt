@@ -3,7 +3,6 @@ package com.example.data.repository
 import android.app.Application
 import android.util.Log
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.example.data.BuildConfig
 import com.example.data.database.dao.WeatherDao
