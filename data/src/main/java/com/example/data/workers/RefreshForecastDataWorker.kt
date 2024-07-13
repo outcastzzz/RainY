@@ -1,9 +1,13 @@
 package com.example.data.workers
 
 import android.content.Context
+import android.util.Log
+import androidx.work.BackoffPolicy
 import androidx.work.CoroutineWorker
+import androidx.work.ForegroundInfo
 import androidx.work.ListenableWorker
-import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.example.data.BuildConfig
@@ -16,8 +20,10 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import java.util.Calendar
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -31,57 +37,85 @@ class RefreshForecastDataWorker(
     private val mutex = Mutex()
 
     override suspend fun doWork(): Result {
-        val lat = inputData.getFloat("lat", 0.0f)
-        val long = inputData.getFloat("long", 0.0f)
-        val requestParams = "$lat, $long"
-        return mutex.withLock {
-            val isEmpty = when (weatherDao.isEmpty()) {
-                0 -> true
-                else -> false
-            }
-            try {
-                val weather: Weather
-                if (isEmpty) {
-                    weather = client.get(ApiRoutes.FORECAST) {
-                        url {
-                            parameters.append("key", BuildConfig.APP_ID)
-                            parameters.append("q", requestParams)
-                            parameters.append("days", "3")
-                        }
-                        contentType(ContentType.Application.Json)
-                    }.body()
-                } else {
-                    weatherDao.clearTable()
-                    weather = client.get(ApiRoutes.FORECAST) {
-                        url {
-                            parameters.append("key", BuildConfig.APP_ID)
-                            parameters.append("q", requestParams)
-                            parameters.append("days", "3")
-                        }
-                        contentType(ContentType.Application.Json)
-                    }.body()
+        while (true) {
+            Log.d("worker", "smth happening")
+            val lat = inputData.getFloat("lat", 0.0f)
+            val long = inputData.getFloat("long", 0.0f)
+            val requestParams = "$lat, $long"
+            Log.d("worker", requestParams)
+            mutex.withLock {
+                val isEmpty = when (weatherDao.isEmpty()) {
+                    0 -> true
+                    else -> false
                 }
-                weatherDao.insertWeather(toWeatherDbo(weather))
-                Result.success()
-            } catch (e: Exception) {
-                Result.failure()
+                try {
+                    var weather: Weather? = null
+                    if (isEmpty) {
+                        weather = client.get(ApiRoutes.FORECAST) {
+                            url {
+                                parameters.append("key", BuildConfig.APP_ID)
+                                parameters.append("q", requestParams)
+                                parameters.append("days", "3")
+                            }
+                            contentType(ContentType.Application.Json)
+                        }.body()
+                    } else {
+                        weatherDao.clearTable()
+                        weather = client.get(ApiRoutes.FORECAST) {
+                            url {
+                                parameters.append("key", BuildConfig.APP_ID)
+                                parameters.append("q", requestParams)
+                                parameters.append("days", "3")
+                            }
+                            contentType(ContentType.Application.Json)
+                        }.body()
+                    }
+                    weather?.let { toWeatherDbo(it) }?.let { weatherDao.insertWeather(it) }
+                    Result.success()
+                } catch (e: Exception) {
+                    Result.retry()
+                }
             }
+            delay(3600000)
         }
+    }
+
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+        return super.getForegroundInfo()
     }
 
     companion object {
 
         const val NAME = "RefreshForecastDataWorker"
 
-        fun makePeriodicRequest(lat: Float, long: Float) =
-            PeriodicWorkRequestBuilder<RefreshForecastDataWorker>(1, TimeUnit.HOURS)
+        private val delay = getDelayUntilNextFullHour()
+
+        fun makeRequest(lat: Float, long: Float) =
+            OneTimeWorkRequestBuilder<RefreshForecastDataWorker>()
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
                 .setInputData(
                     workDataOf(
                         "lat" to lat,
                         "long" to long
                     )
                 )
+                .setBackoffCriteria(
+                    BackoffPolicy.LINEAR,
+                    PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS,
+                    TimeUnit.MILLISECONDS
+                )
                 .build()
+
+        private fun getDelayUntilNextFullHour(): Long {
+            val now = Calendar.getInstance()
+            val nextHour = now.clone() as Calendar
+            nextHour.add(Calendar.HOUR, 1)
+            nextHour.set(Calendar.MINUTE, 0)
+            nextHour.set(Calendar.SECOND, 0)
+            nextHour.set(Calendar.MILLISECOND, 0)
+
+            return nextHour.timeInMillis - now.timeInMillis
+        }
     }
 
     class Factory @Inject constructor(
