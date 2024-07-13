@@ -2,7 +2,7 @@ package com.example.data.repository
 
 import android.app.Application
 import android.util.Log
-import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.example.data.BuildConfig
 import com.example.data.database.dao.WeatherDao
@@ -40,10 +40,10 @@ class ForecastRepositoryImpl @Inject constructor(
 
     override suspend fun loadWeatherForCityImplicit(lat: Float, long: Float) {
         val workManager = WorkManager.getInstance(application)
-        workManager.enqueueUniquePeriodicWork(
+        workManager.enqueueUniqueWork(
             RefreshForecastDataWorker.NAME,
-            ExistingPeriodicWorkPolicy.UPDATE,
-            RefreshForecastDataWorker.makePeriodicRequest(lat, long)
+            ExistingWorkPolicy.REPLACE,
+            RefreshForecastDataWorker.makeRequest(lat, long)
         )
     }
 
