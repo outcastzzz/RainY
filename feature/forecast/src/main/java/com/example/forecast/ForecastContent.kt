@@ -243,5 +243,3 @@ private fun DailyItem(
         }
     }
 }
-
-fun Density.toPx(dp: Dp): Float = dp.toPx()
