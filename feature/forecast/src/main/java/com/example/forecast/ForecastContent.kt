@@ -3,6 +3,7 @@ package com.example.forecast
 import android.icu.util.Calendar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,7 +25,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.common.R
@@ -43,7 +47,7 @@ fun ForecastContent(component: ForecastComponent) {
     val hourlyItems = state.hourlyForecast
     val dailyItems = state.dailyForecast.forecastDay
 
-    Scaffold (
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
@@ -65,13 +69,17 @@ fun ForecastContent(component: ForecastComponent) {
             hourOfDay == currentHour
         }.takeIf { it >= 0 } ?: 0
 
+        val density = LocalDensity.current
+        val offsetPx = with(density) { 30.dp.toPx() }
+
         LaunchedEffect(Unit) {
             coroutineScope.launch {
                 listState.scrollToItem(initialIndex)
+                listState.scrollBy(-offsetPx)
             }
         }
 
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.primary)
@@ -88,7 +96,7 @@ fun ForecastContent(component: ForecastComponent) {
                 style = MaterialTheme.typography.displayLarge
             )
 
-            Column (
+            Column(
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
@@ -108,18 +116,22 @@ fun ForecastContent(component: ForecastComponent) {
                     horizontalArrangement = Arrangement.spacedBy(30.dp)
                 ) {
                     itemsIndexed(hourlyItems) { index, hour ->
-                        val paddingModifier = when(index) {
+                        val paddingModifier = when (index) {
                             0 -> Modifier.padding(start = 30.dp)
                             hourlyItems.size - 1 -> Modifier.padding(end = 30.dp)
                             else -> Modifier
                         }
-                        HourlyItem(hour.time, hour.condition.code.findIconForCode(), paddingModifier)
+                        HourlyItem(
+                            hour.time,
+                            hour.condition.code.findIconForCode(),
+                            paddingModifier
+                        )
                     }
                 }
 
             }
 
-            Column (
+            Column(
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
@@ -138,7 +150,7 @@ fun ForecastContent(component: ForecastComponent) {
                     horizontalArrangement = Arrangement.spacedBy(30.dp)
                 ) {
                     itemsIndexed(dailyItems) { index, day ->
-                        val paddingModifier = when(index) {
+                        val paddingModifier = when (index) {
                             0 -> Modifier.padding(start = 30.dp)
                             dailyItems.size - 1 -> Modifier.padding(end = 30.dp)
                             else -> Modifier
@@ -231,3 +243,5 @@ private fun DailyItem(
         }
     }
 }
+
+fun Density.toPx(dp: Dp): Float = dp.toPx()
