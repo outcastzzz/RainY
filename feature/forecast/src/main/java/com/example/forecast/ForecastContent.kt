@@ -33,8 +33,10 @@ import com.example.common.R
 import com.example.common.theme.TextColorAccent
 import com.example.common.utils.findIconForCode
 import com.example.common.utils.toSmallDate
+import com.example.common.utils.toTempString
 import com.example.common.utils.toTimeFormat
 import com.example.domain.entity.ForecastDay
+import com.example.domain.entity.Hour
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -119,11 +121,7 @@ fun ForecastContent(component: ForecastComponent) {
                             hourlyItems.size - 1 -> Modifier.padding(end = 30.dp)
                             else -> Modifier
                         }
-                        HourlyItem(
-                            hour.time,
-                            hour.condition.code.findIconForCode(),
-                            paddingModifier
-                        )
+                        HourlyItem(hour, paddingModifier)
                     }
                 }
 
@@ -166,23 +164,28 @@ fun ForecastContent(component: ForecastComponent) {
 }
 
 @Composable
-private fun HourlyItem(hour: Long, icon: Int, modifier: Modifier = Modifier) {
+private fun HourlyItem(hour: Hour, modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Text(
-            text = hour.toTimeFormat(),
+            text = hour.time.toTimeFormat(),
             style = MaterialTheme.typography.displaySmall,
             color = TextColorAccent
         )
-        Spacer(Modifier.height(10.dp))
         Image(
-            painter = painterResource(icon),
+            painter = painterResource(hour.condition.code.findIconForCode()),
             contentDescription = "hourly forecast icon",
             modifier = Modifier
                 .size(24.dp)
+        )
+        Text(
+            text = hour.temp.roundToInt().toTempString(),
+            style = MaterialTheme.typography.titleSmall,
+            color = TextColorAccent
         )
     }
 }
