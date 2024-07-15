@@ -51,6 +51,10 @@ fun Long.toTimeFormat(): String {
     return forecastTimeFormat.format(this * 1000)
 }
 
+fun Int.toTempString(): String {
+    return "$this°C"
+}
+
 fun Int.findIconForCode(): Int {
     return when(this) {
         1000 -> R.drawable.ic_sunny
