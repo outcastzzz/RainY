@@ -5,6 +5,8 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.example.domain.entity.Astronomy
+import com.example.domain.entity.Weather
 import com.example.weather.WeatherStore.Intent
 import com.example.weather.WeatherStore.Label
 import com.example.weather.WeatherStore.State
@@ -15,8 +17,8 @@ interface WeatherStore : Store<Intent, State, Label> {
     sealed interface Intent
 
     data class State(
-        val weather: com.example.domain.entity.Weather,
-        val astronomy: com.example.domain.entity.Astronomy
+        val weather: Weather,
+        val astronomy: Astronomy
     )
 
     sealed interface Label
@@ -27,8 +29,8 @@ class WeatherStoreFactory @Inject constructor(
 ) {
 
     fun create(
-        weather: com.example.domain.entity.Weather,
-        astronomy: com.example.domain.entity.Astronomy
+        weather: Weather,
+        astronomy: Astronomy
     ): WeatherStore =
         object : WeatherStore, Store<Intent, State, Label> by storeFactory.create(
             name = "MainStore",
@@ -44,8 +46,8 @@ class WeatherStoreFactory @Inject constructor(
     private sealed interface Action {
 
         data class WeatherLoaded(
-            val weather: com.example.domain.entity.Weather,
-            val astronomy: com.example.domain.entity.Astronomy
+            val weather: Weather,
+            val astronomy: Astronomy
         ): Action
 
     }
@@ -53,8 +55,8 @@ class WeatherStoreFactory @Inject constructor(
     private sealed interface Msg {
 
         data class WeatherLoaded(
-            val weather: com.example.domain.entity.Weather,
-            val astronomy: com.example.domain.entity.Astronomy
+            val weather: Weather,
+            val astronomy: Astronomy
         ): Msg
 
     }

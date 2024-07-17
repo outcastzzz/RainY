@@ -1,5 +1,6 @@
 package com.example.weather
 
+import android.icu.util.Calendar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +29,7 @@ import com.example.common.theme.displayFontFamily
 import com.example.common.utils.findIconForCode
 import com.example.common.utils.toDateString
 import com.example.common.utils.toTimeString
+import com.example.domain.entity.Hour
 import kotlin.math.roundToInt
 
 @Composable
@@ -42,6 +44,26 @@ fun WeatherContent(component: WeatherComponent) {
             .fillMaxSize()
             .padding(top = 30.dp),
     ) { paddingValues ->
+
+        val hourlyTemp = weather.forecast.forecastDay[0].hour
+
+        fun findCurrentHourTemperature(hours: List<Hour>): String {
+
+            val currentTime = System.currentTimeMillis()
+            val currentHour = Calendar.getInstance().apply {
+                timeInMillis = currentTime
+            }.get(Calendar.HOUR_OF_DAY)
+
+            val initialIndex = hours.indexOfFirst { hour ->
+                val calendar = Calendar.getInstance().apply {
+                    timeInMillis = hour.time * 1000
+                }
+                val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+                hourOfDay == currentHour
+            }.takeIf { it >= 0 } ?: 0
+
+            return hours.getOrNull(initialIndex)?.temp?.roundToInt().toString()
+        }
 
         Column (
             modifier = Modifier
@@ -63,9 +85,7 @@ fun WeatherContent(component: WeatherComponent) {
                         .padding(top = 20.dp),
                 ) {
                     Text(
-                        text = weather.current.tempC
-                            .roundToInt()
-                            .toString(),
+                        text = findCurrentHourTemperature(hourlyTemp),
                         fontSize = 96.sp,
                         fontFamily = displayFontFamily
                     )
