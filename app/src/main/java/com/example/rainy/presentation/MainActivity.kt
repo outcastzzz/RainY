@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -45,9 +44,11 @@ class MainActivity : ComponentActivity() {
         component.inject(this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        Log.d("api_30", "working")
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContent {
             SetupAppStart()
+            Log.d("api_30", "setContent too")
         }
     }
 
@@ -56,25 +57,25 @@ class MainActivity : ComponentActivity() {
         val latitudeState = remember { mutableStateOf<Float?>(null) }
         val longitudeState = remember { mutableStateOf<Float?>(null) }
 
+        Log.d("api_30", "setupApp too")
+
         LaunchedEffect(Unit) {
+            Log.d("api_30", "setContent too2")
             if (ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.d("api_30", "setContent too3")
                 if (isLocationEnabled()) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        requestPermissionLauncher.launch(
-                            arrayOf(
-                                Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.POST_NOTIFICATIONS
-                            )
+                    Log.d("api_30", "setContent too4")
+                    requestPermissionLauncher.launch(
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
                         )
-                    }
+                    )
                 }
                 return@LaunchedEffect
             } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    requestPermissions()
-                }
+                requestPermissions()
             }
 
             fusedLocationProviderClient.lastLocation
@@ -125,6 +126,7 @@ class MainActivity : ComponentActivity() {
         val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
 
         if (fineLocationGranted || coarseLocationGranted) {
+            Log.d("api_30", "req loc")
             getLocation()
         } else {
             Log.d("mytag", "Location permission denied")
