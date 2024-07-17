@@ -76,7 +76,9 @@ class RefreshForecastDataWorker(
                     Result.retry()
                 }
             }
-            delay(3600000)
+            val hours = 12
+            val hoursInMilliseconds = TimeUnit.HOURS.toMillis(hours.toLong())
+            delay(hoursInMilliseconds)
         }
     }
 
