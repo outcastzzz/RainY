@@ -49,7 +49,7 @@ class RefreshForecastDataWorker(
                     else -> false
                 }
                 try {
-                    var weather: Weather? = null
+                    val weather: Weather?
                     if (isEmpty) {
                         weather = client.get(ApiRoutes.FORECAST) {
                             url {
