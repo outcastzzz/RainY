@@ -151,7 +151,7 @@ class SelectCityStoreFactory @Inject constructor(
         private suspend fun loadWeatherForCity(city: City) {
             dispatch(Msg.WeatherLoading(city.name))
             try {
-                val weather = loadWeatherForCityExplicitUseCase(city.lat, city.long)
+                val weather = loadWeatherForCityExplicitUseCase(city.lat, city.lon)
                 dispatch(
                     Msg.WeatherLoaded(
                         cityName = city.name,
