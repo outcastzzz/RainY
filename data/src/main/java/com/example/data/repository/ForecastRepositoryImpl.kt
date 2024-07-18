@@ -11,6 +11,7 @@ import com.example.data.mapper.toWeatherDbo
 import com.example.data.network.ApiRoutes
 import com.example.data.workers.RefreshForecastDataWorker
 import com.example.domain.entity.Astronomy
+import com.example.domain.entity.CurrentCity
 import com.example.domain.entity.Weather
 import com.example.domain.repository.ForecastRepository
 import io.ktor.client.HttpClient
@@ -27,15 +28,14 @@ class ForecastRepositoryImpl @Inject constructor(
 ): ForecastRepository {
 
     override suspend fun getCurrentCityName(lat: Float, long: Float): String {
-        val response = client.get(ApiRoutes.SEARCH_ROUTE) {
+        return client.get(ApiRoutes.SEARCH_CITY_NAME_ROUTE) {
             url {
                 parameters.append("lat", lat.toString())
                 parameters.append("lon", long.toString())
-                parameters.append("appid", BuildConfig.WEATHER_KEY)
+                parameters.append("appid", BuildConfig.GEO_KEY)
             }
             contentType(ContentType.Application.Json)
-        }.body<List<com.example.domain.entity.City?>>()
-        return response[0]?.name ?: "We don`t know where at you"
+        }.body<CurrentCity>().address.city
     }
 
     override suspend fun loadWeatherForCityImplicit(lat: Float, long: Float) {

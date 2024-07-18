@@ -13,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.core.app.ActivityCompat
 import com.arkivanov.decompose.defaultComponentContext
 import com.example.common.theme.RainYTheme
@@ -36,6 +35,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var rootComponentFactory: RootComponentImpl.Factory
 
+    private val latitudeState =  mutableStateOf<Float?>(null)
+    private val longitudeState = mutableStateOf<Float?>(null)
+
     private val component by lazy {
         (applicationContext as RainyApp).component
     }
@@ -54,43 +56,17 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun SetupAppStart() {
-        val latitudeState = remember { mutableStateOf<Float?>(null) }
-        val longitudeState = remember { mutableStateOf<Float?>(null) }
-
-        Log.d("api_30", "setupApp too")
 
         LaunchedEffect(Unit) {
-            Log.d("api_30", "setContent too2")
-            if (ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Log.d("api_30", "setContent too3")
-                if (isLocationEnabled()) {
-                    Log.d("api_30", "setContent too4")
-                    requestPermissionLauncher.launch(
-                        arrayOf(
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION,
-                        )
-                    )
-                }
-                return@LaunchedEffect
-            } else {
-                requestPermissions()
-            }
-
-            fusedLocationProviderClient.lastLocation
-                .addOnSuccessListener { location ->
-                    location?.let {
-                        Log.d("mytag", "Latitude: ${it.latitude}, Longitude: ${it.longitude}")
-                        latitudeState.value = it.latitude.toFloat()
-                        longitudeState.value = it.longitude.toFloat()
-                    }
-                }
+            tryToGetLocation()
         }
 
         RainYTheme {
             val lat = latitudeState.value
             val long = longitudeState.value
+
+            Log.d("api_30", "$lat")
+            Log.d("api_30", "$long")
 
             if (lat != null && long != null) {
                 RootContent(
@@ -100,9 +76,39 @@ class MainActivity : ComponentActivity() {
                         long = long
                     )
                 )
+            } else {
+                tryToGetLocation()
             }
         }
 
+    }
+
+    private fun tryToGetLocation() {
+        if (ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("api_30", "setContent too3")
+            if (isLocationEnabled()) {
+                Log.d("api_30", "setContent too4")
+                requestPermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                    )
+                )
+            }
+            return
+        } else {
+            requestPermissions()
+        }
+
+        fusedLocationProviderClient.lastLocation
+            .addOnSuccessListener { location ->
+                location?.let {
+                    Log.d("mytag", "Latitude: ${it.latitude}, Longitude: ${it.longitude}")
+                    latitudeState.value = it.latitude.toFloat()
+                    longitudeState.value = it.longitude.toFloat()
+                }
+            }
     }
 
     private fun getLocation() {
@@ -110,7 +116,10 @@ class MainActivity : ComponentActivity() {
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (isLocationEnabled()) {
                 requestPermissionLauncher.launch(
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                    )
                 )
                 return
             }

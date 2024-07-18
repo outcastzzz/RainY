@@ -13,7 +13,7 @@ import com.example.data.database.dbo.WeatherDbo
 
 @Database(
     entities = [CityDbo::class, WeatherDbo::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

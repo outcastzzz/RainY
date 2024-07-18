@@ -6,10 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -182,15 +180,9 @@ private fun CityCard(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = city.name,
-                style = MaterialTheme.typography.displayMedium,
+                text = city.name.split(',')[0],
+                style = MaterialTheme.typography.displayLarge,
                 color = MaterialTheme.colorScheme.secondary
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = city.country,
-                style = MaterialTheme.typography.displaySmall,
-                color = com.example.common.theme.TextColorAccent
             )
         }
     }
