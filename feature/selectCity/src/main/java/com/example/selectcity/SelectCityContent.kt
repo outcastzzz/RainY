@@ -120,7 +120,7 @@ private fun CityItem(
                         verticalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
                         Text(
-                            text = weather.cityName,
+                            text = weather.cityName.split(',')[0],
                             style = MaterialTheme.typography.displayLarge,
                             color = MaterialTheme.colorScheme.secondary
                         )
