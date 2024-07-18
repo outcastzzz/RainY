@@ -70,7 +70,13 @@ fun ForecastContent(component: ForecastComponent) {
         }.takeIf { it >= 0 } ?: 0
 
         val density = LocalDensity.current
-        val offsetPx = with(density) { 30.dp.toPx() }
+        val offsetPx = with(density) {
+            if (initialIndex > 20) {
+                0.dp.toPx()
+            } else {
+                30.dp.toPx()
+            }
+        }
 
         LaunchedEffect(Unit) {
             coroutineScope.launch {
