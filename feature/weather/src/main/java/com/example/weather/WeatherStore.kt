@@ -62,8 +62,7 @@ class WeatherStoreFactory @Inject constructor(
     }
 
     private class BootstrapperImpl: CoroutineBootstrapper<Action>() {
-        override fun invoke() {
-        }
+        override fun invoke() {}
     }
 
     private class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Msg, Label>() {
