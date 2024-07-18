@@ -20,10 +20,10 @@ android {
         )
         buildConfigField("String", "APP_ID", "\"$key\"")
 
-        val openWeather = property("weatherKey")?.toString() ?: error(
+        val geocodingKey = property("geocodingKey")?.toString() ?: error(
             "You should add apikey into gradle .properties"
         )
-        buildConfigField("String", "WEATHER_KEY", "\"$openWeather\"")
+        buildConfigField("String", "GEO_KEY", "\"$geocodingKey\"")
 
     }
 
