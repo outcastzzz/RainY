@@ -8,6 +8,8 @@ internal object ApiRoutes {
 
     const val ASTRONOMY = "$BASE_URL/astronomy.json"
 
-    const val SEARCH_ROUTE = "https://api.openweathermap.org/geo/1.0/reverse"
+    const val SEARCH_CITY_NAME_ROUTE = " https://geocode.maps.co/reverse"
+
+    const val SEARCH_CITIES_ROUTE = "https://geocode.maps.co/search"
 
 }
