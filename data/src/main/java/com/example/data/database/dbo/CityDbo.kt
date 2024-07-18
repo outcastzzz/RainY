@@ -5,9 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "city_table")
 data class CityDbo(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val name: String,
     val lat: Float,
-    val long: Float,
-    val country: String,
+    val lon: Float,
 )
+
