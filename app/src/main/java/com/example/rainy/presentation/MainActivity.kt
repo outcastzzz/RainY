@@ -17,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import com.arkivanov.decompose.defaultComponentContext
-import com.example.common.theme.RainYTheme
 import com.example.rainy.RainyApp
 import com.example.rainy.presentation.root.RootComponentImpl
 import com.example.rainy.presentation.root.RootContent
@@ -47,7 +46,7 @@ class MainActivity : ComponentActivity() {
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    private val latitudeState =  mutableStateOf<Float?>(null)
+    private val latitudeState = mutableStateOf<Float?>(null)
     private val longitudeState = mutableStateOf<Float?>(null)
 
     private val component by lazy {
@@ -73,24 +72,29 @@ class MainActivity : ComponentActivity() {
             tryToGetLocation(context)
         }
 
-        RainYTheme {
-            val lat = latitudeState.value
-            val long = longitudeState.value
-            if (lat != null && long != null) {
-                RootContent(
-                    component = rootComponentFactory.create(
-                        defaultComponentContext(),
-                        lat = lat,
-                        long = long
-                    )
+        val lat = latitudeState.value
+        val long = longitudeState.value
+        if (lat != null && long != null) {
+            RootContent(
+                component = rootComponentFactory.create(
+                    defaultComponentContext(),
+                    lat = lat,
+                    long = long
                 )
-            }
+            )
         }
     }
 
     private fun tryToGetLocation(context: Context) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requestPermissionLauncher.launch(
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -107,16 +111,28 @@ class MainActivity : ComponentActivity() {
 
     private suspend fun requestCurrentLocation() {
         withContext(Dispatchers.IO) {
-            if (ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(
+                    this@MainActivity,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(
+                    this@MainActivity,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
 
-                val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
-                    .setWaitForAccurateLocation(false)
-                    .setMinUpdateIntervalMillis(5000)
-                    .setMaxUpdateDelayMillis(10000)
-                    .build()
+                val locationRequest =
+                    LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
+                        .setWaitForAccurateLocation(false)
+                        .setMinUpdateIntervalMillis(5000)
+                        .setMaxUpdateDelayMillis(10000)
+                        .build()
 
-                fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+                fusedLocationProviderClient.requestLocationUpdates(
+                    locationRequest,
+                    locationCallback,
+                    Looper.getMainLooper()
+                )
             }
         }
     }
