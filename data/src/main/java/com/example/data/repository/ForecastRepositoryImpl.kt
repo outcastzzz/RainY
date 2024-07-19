@@ -32,7 +32,7 @@ class ForecastRepositoryImpl @Inject constructor(
             url {
                 parameters.append("lat", lat.toString())
                 parameters.append("lon", long.toString())
-                parameters.append("appid", BuildConfig.GEO_KEY)
+                parameters.append("api_key", BuildConfig.GEO_KEY)
             }
             contentType(ContentType.Application.Json)
         }.body<CurrentCity>().address.city
