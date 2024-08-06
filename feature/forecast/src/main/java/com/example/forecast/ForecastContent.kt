@@ -1,5 +1,6 @@
 package com.example.forecast
 
+import android.annotation.SuppressLint
 import android.icu.util.Calendar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,15 +41,17 @@ import com.example.domain.entity.Hour
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
+private const val EVENING_TIME_INDEX = 19
+
 @Composable
-fun ForecastContent(component: ForecastComponent) {
+fun ForecastContent(modifier: Modifier, component: ForecastComponent) {
 
     val state by component.model.collectAsStateWithLifecycle()
     val hourlyItems = state.hourlyForecast
     val dailyItems = state.dailyForecast.forecastDay
 
     Scaffold(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
     ) { paddingValues ->
@@ -71,7 +74,7 @@ fun ForecastContent(component: ForecastComponent) {
 
         val density = LocalDensity.current
         val offsetPx = with(density) {
-            if (initialIndex > 20) {
+            if (initialIndex >=  EVENING_TIME_INDEX) {
                 0.dp.toPx()
             } else {
                 30.dp.toPx()
@@ -86,7 +89,7 @@ fun ForecastContent(component: ForecastComponent) {
         }
 
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.primary)
                 .padding(
@@ -96,71 +99,72 @@ fun ForecastContent(component: ForecastComponent) {
         ) {
 
             Text(
-                modifier = Modifier
+                modifier = modifier
                     .padding(start = 30.dp),
                 text = "Forecast",
                 style = MaterialTheme.typography.displayLarge
             )
 
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth(),
             ) {
 
                 Text(
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(start = 30.dp),
                     text = "Hourly Forecast",
                     style = MaterialTheme.typography.displayMedium,
                     color = TextColorAccent
                 )
-                Spacer(Modifier.height(20.dp))
+                Spacer(modifier.height(20.dp))
                 LazyRow(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth(),
                     state = listState,
                     horizontalArrangement = Arrangement.spacedBy(30.dp)
                 ) {
                     itemsIndexed(hourlyItems) { index, hour ->
                         val paddingModifier = when (index) {
-                            0 -> Modifier.padding(start = 30.dp)
-                            hourlyItems.size - 1 -> Modifier.padding(end = 30.dp)
-                            else -> Modifier
+                            0 -> modifier.padding(start = 30.dp)
+                            hourlyItems.size - 1 -> modifier.padding(end = 30.dp)
+                            else -> modifier
                         }
-                        HourlyItem(hour, paddingModifier)
+                        HourlyItem(hour, paddingModifier, modifier)
                     }
                 }
 
             }
 
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth(),
             ) {
 
                 Text(
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(start = 30.dp),
                     text = "Daily Forecast",
                     style = MaterialTheme.typography.displayMedium,
                     color = TextColorAccent
                 )
-                Spacer(Modifier.height(20.dp))
+                Spacer(modifier.height(20.dp))
                 LazyRow(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(30.dp)
                 ) {
                     itemsIndexed(dailyItems) { index, day ->
                         val paddingModifier = when (index) {
-                            0 -> Modifier.padding(start = 30.dp)
-                            dailyItems.size - 1 -> Modifier.padding(end = 30.dp)
-                            else -> Modifier
+                            0 -> modifier.padding(start = 30.dp)
+                            dailyItems.size - 1 -> modifier.padding(end = 30.dp)
+                            else -> modifier
                         }
                         DailyItem(
                             day,
                             day.day.condition.code.findIconForCode(),
-                            paddingModifier
+                            paddingModifier,
+                            modifier
                         )
                     }
                 }
@@ -170,10 +174,14 @@ fun ForecastContent(component: ForecastComponent) {
 }
 
 @Composable
-private fun HourlyItem(hour: Hour, modifier: Modifier = Modifier) {
+private fun HourlyItem(
+    hour: Hour,
+    @SuppressLint("ModifierParameter") paddingModifier: Modifier,
+    modifier: Modifier
+) {
 
     Column(
-        modifier = modifier,
+        modifier = paddingModifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
@@ -185,7 +193,7 @@ private fun HourlyItem(hour: Hour, modifier: Modifier = Modifier) {
         Image(
             painter = painterResource(hour.condition.code.findIconForCode()),
             contentDescription = "hourly forecast icon",
-            modifier = Modifier
+            modifier = modifier
                 .size(24.dp)
         )
         Text(
@@ -200,14 +208,15 @@ private fun HourlyItem(hour: Hour, modifier: Modifier = Modifier) {
 private fun DailyItem(
     day: ForecastDay,
     icon: Int,
-    modifier: Modifier = Modifier
+    @SuppressLint("ModifierParameter") paddingModifier: Modifier,
+    modifier: Modifier
 ) {
 
     val minTemp = day.day.minTemp.roundToInt().toString()
     val maxTemp = day.day.maxTemp.roundToInt().toString()
 
     Column(
-        modifier = modifier,
+        modifier = paddingModifier,
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -219,14 +228,14 @@ private fun DailyItem(
         Image(
             painter = painterResource(icon),
             contentDescription = "daily forecast icon",
-            modifier = Modifier
+            modifier = modifier
                 .size(24.dp)
         )
         Row {
             Image(
                 painter = painterResource(R.drawable.ic_max_temp),
                 contentDescription = "daily max temp",
-                modifier = Modifier
+                modifier = modifier
                     .size(11.dp)
             )
             Text(
@@ -239,7 +248,7 @@ private fun DailyItem(
             Image(
                 painter = painterResource(R.drawable.ic_min_temp),
                 contentDescription = "daily max temp",
-                modifier = Modifier
+                modifier = modifier
                     .size(11.dp)
             )
             Text(

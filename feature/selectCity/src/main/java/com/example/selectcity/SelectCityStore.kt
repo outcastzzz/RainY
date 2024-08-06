@@ -6,7 +6,6 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.example.common.utils.findIconForCode
 import com.example.domain.entity.City
 import com.example.domain.useCase.ChangeFavouriteStateUseCase
 import com.example.domain.useCase.GetFavouriteCitiesUseCase
@@ -128,7 +127,6 @@ class SelectCityStoreFactory @Inject constructor(
             is Intent.SwipeRemoveCity ->  {
                 selectJob?.cancel()
                 selectJob = scope.launch {
-                    Log.d("Xyi", "Removing city: ${intent.city.name}")
                     changeFavouriteStateUseCase.removeFromFavourite(intent.city.name)
                     publish(Label.SwipeRemoveCity(intent.city))
                 }
@@ -139,7 +137,6 @@ class SelectCityStoreFactory @Inject constructor(
             is Action.CitiesLoaded -> {
                 val cities = action.cities
                 dispatch(Msg.CitiesLoaded(cities))
-                Log.d("SelectCityStore", "Cities loaded: $cities")
                 cities.forEach { city ->
                     scope.launch {
                         loadWeatherForCity(city)
@@ -152,12 +149,13 @@ class SelectCityStoreFactory @Inject constructor(
             dispatch(Msg.WeatherLoading(city.name))
             try {
                 val weather = loadWeatherForCityExplicitUseCase(city.lat, city.lon)
+                Log.d("iconTag", "${weather.current.condition.code}")
                 dispatch(
                     Msg.WeatherLoaded(
                         cityName = city.name,
                         temp = weather.current.tempC.toInt(),
                         description = weather.current.condition.text,
-                        icon = weather.current.condition.code.findIconForCode()
+                        icon = weather.current.condition.code
                     )
                 )
             } catch (e: Exception) {
@@ -169,7 +167,6 @@ class SelectCityStoreFactory @Inject constructor(
     private object ReducerImpl : Reducer<State, Msg> {
         override fun State.reduce(msg: Msg): State = when(msg) {
             is Msg.CitiesLoaded -> {
-                Log.d("SelectCityStore", "Reducer: CitiesLoaded")
                 copy(
                     cityItems = msg.cities.map {
                         State.CityItem(
@@ -180,7 +177,6 @@ class SelectCityStoreFactory @Inject constructor(
                 )
             }
             is Msg.WeatherError -> {
-                Log.d("SelectCityStore", "Reducer: WeatherError for ${msg.cityName}")
                 copy(
                     cityItems = cityItems.map {
                         if (it.city.name == msg.cityName) {
@@ -192,7 +188,6 @@ class SelectCityStoreFactory @Inject constructor(
                 )
             }
             is Msg.WeatherLoaded -> {
-                Log.d("SelectCityStore", "Reducer: WeatherLoaded for ${msg.cityName}")
                 copy(
                     cityItems = cityItems.map {
                         if (it.city.name == msg.cityName) {
@@ -209,7 +204,6 @@ class SelectCityStoreFactory @Inject constructor(
                 )
             }
             is Msg.WeatherLoading -> {
-                Log.d("SelectCityStore", "Reducer: WeatherLoading for ${msg.cityName}")
                 copy(
                     cityItems = cityItems.map {
                         if (it.city.name == msg.cityName) {

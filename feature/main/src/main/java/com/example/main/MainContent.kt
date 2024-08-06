@@ -5,8 +5,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,6 +36,7 @@ import com.example.weather.details.DetailsContent
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainContent(
+    modifier: Modifier,
     mainComponent: MainComponent,
     weatherComponent: WeatherComponent,
     forecastComponent: ForecastComponent
@@ -57,52 +56,44 @@ fun MainContent(
         activity?.finish()
     }
 
-    Scaffold (
-        modifier = Modifier
+    Scaffold(
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
         topBar = {
             MainTopBar(
-                cityName,
-                { mainComponent.onClickSettings() }
+                cityName = cityName,
+                onClickSettings = { mainComponent.onClickSettings() }
             ) { mainComponent.onClickSelectCity() }
         }
     ) { paddingValues ->
-
-        Column (
-            modifier = Modifier
+        HorizontalPager(
+            state = pagerState,
+            modifier = modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(MaterialTheme.colorScheme.primary),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxSize()
-            ) { page ->
-                when(page) {
-                    0 -> DetailsContent(weatherComponent)
-                    1 -> WeatherContent(weatherComponent)
-                    2 -> ForecastContent(forecastComponent)
-                }
+        ) { page ->
+            when (page) {
+                0 -> DetailsContent(modifier, weatherComponent)
+                1 -> WeatherContent(modifier, weatherComponent)
+                2 -> ForecastContent(modifier, forecastComponent)
             }
         }
-
     }
 
 }
 
 @Composable
 private fun MainTopBar(
+    modifier: Modifier = Modifier,
     cityName: String,
     onClickSettings: () -> Unit,
     onClickCities: () -> Unit
 ) {
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary)
             .padding(
@@ -113,16 +104,16 @@ private fun MainTopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         CurrentCityText(cityName)
-        Spacer(Modifier.weight(1f))
+        Spacer(modifier.weight(1f))
         Image(
             painter = painterResource(R.drawable.ic_map),
             contentDescription = "select city",
-            modifier = Modifier
+            modifier = modifier
                 .clickable {
                     onClickCities()
                 }
         )
-        Spacer(Modifier.width(20.dp))
+        Spacer(modifier.width(20.dp))
         IconButton(onClick = { onClickSettings() }) {
             Image(
                 painter = painterResource(R.drawable.ic_settings),
@@ -130,15 +121,17 @@ private fun MainTopBar(
             )
         }
     }
-
 }
 
 @Composable
-private fun CurrentCityText(cityName: String) {
+private fun CurrentCityText(
+    cityName: String,
+    modifier: Modifier = Modifier,
+) {
     Text(
         text = cityName,
         style = MaterialTheme.typography.displayMedium,
-        modifier = Modifier
+        modifier = modifier
             .padding(6.dp)
             .background(MaterialTheme.colorScheme.primary),
         color = MaterialTheme.colorScheme.secondary
