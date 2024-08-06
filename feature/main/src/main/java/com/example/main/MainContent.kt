@@ -57,39 +57,30 @@ fun MainContent(
         activity?.finish()
     }
 
-    Scaffold (
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
         topBar = {
             MainTopBar(
-                cityName,
-                { mainComponent.onClickSettings() }
+                cityName = cityName,
+                onClickSettings = { mainComponent.onClickSettings() }
             ) { mainComponent.onClickSelectCity() }
         }
     ) { paddingValues ->
-
-        Column (
+        HorizontalPager(
+            state = pagerState,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(MaterialTheme.colorScheme.primary),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxSize()
-            ) { page ->
-                when(page) {
-                    0 -> DetailsContent(weatherComponent)
-                    1 -> WeatherContent(weatherComponent)
-                    2 -> ForecastContent(forecastComponent)
-                }
+        ) { page ->
+            when (page) {
+                0 -> DetailsContent(weatherComponent)
+                1 -> WeatherContent(weatherComponent)
+                2 -> ForecastContent(forecastComponent)
             }
         }
-
     }
 
 }
@@ -130,7 +121,6 @@ private fun MainTopBar(
             )
         }
     }
-
 }
 
 @Composable
