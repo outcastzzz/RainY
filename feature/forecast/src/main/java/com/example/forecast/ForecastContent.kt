@@ -40,6 +40,8 @@ import com.example.domain.entity.Hour
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
+private const val EVENING_TIME_INDEX = 19
+
 @Composable
 fun ForecastContent(component: ForecastComponent) {
 
@@ -71,7 +73,7 @@ fun ForecastContent(component: ForecastComponent) {
 
         val density = LocalDensity.current
         val offsetPx = with(density) {
-            if (initialIndex > 20) {
+            if (initialIndex >=  EVENING_TIME_INDEX) {
                 0.dp.toPx()
             } else {
                 30.dp.toPx()
