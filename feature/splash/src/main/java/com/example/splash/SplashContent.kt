@@ -27,12 +27,12 @@ import com.example.common.R
 import com.example.domain.entity.InfoData
 
 @Composable
-fun SplashContent(component: SplashComponent) {
+fun SplashContent(modifier: Modifier, component: SplashComponent) {
 
     val state by component.model.collectAsStateWithLifecycle()
 
     Column (
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
     ) {
@@ -66,7 +66,7 @@ private fun SplashStateLoaded(
 }
 
 @Composable
-private fun SplashLoading() {
+private fun SplashLoading(modifier: Modifier = Modifier) {
 
     val anim = if(isSystemInDarkTheme()) R.raw.dark_mode_anim else R.raw.light_mode_anim
 
@@ -76,7 +76,7 @@ private fun SplashLoading() {
     )
 
     Column (
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
         verticalArrangement = Arrangement.Center,
@@ -85,7 +85,7 @@ private fun SplashLoading() {
 
         LottieAnimation(
             composition = composition,
-            modifier = Modifier.size(200.dp),
+            modifier = modifier.size(200.dp),
             contentScale = ContentScale.Crop,
             outlineMasksAndMattes = true,
             iterations = LottieConstants.IterateForever,
@@ -95,9 +95,9 @@ private fun SplashLoading() {
 }
 
 @Composable
-private fun SplashError() {
+private fun SplashError(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
         verticalArrangement = Arrangement.Center,
@@ -108,7 +108,7 @@ private fun SplashError() {
             style = MaterialTheme.typography.displayLarge,
             color = MaterialTheme.colorScheme.secondary,
             textAlign = TextAlign.Center,
-            modifier = Modifier
+            modifier = modifier
                 .padding(start = 30.dp, end = 30.dp)
         )
     }

@@ -33,14 +33,17 @@ import com.example.domain.entity.Hour
 import kotlin.math.roundToInt
 
 @Composable
-fun WeatherContent(component: WeatherComponent) {
+fun WeatherContent(
+    modifier: Modifier,
+    component: WeatherComponent
+) {
 
     val state by component.model.collectAsStateWithLifecycle()
     val weather = state.weather
     val astro = state.astronomy
 
     Scaffold (
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(top = 30.dp),
     ) { paddingValues ->
@@ -66,7 +69,7 @@ fun WeatherContent(component: WeatherComponent) {
         }
 
         Column (
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.primary)
                 .padding(paddingValues),
@@ -81,7 +84,7 @@ fun WeatherContent(component: WeatherComponent) {
                     style = MaterialTheme.typography.displayMedium
                 )
                 Row (
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(top = 20.dp),
                 ) {
                     Text(
@@ -93,12 +96,12 @@ fun WeatherContent(component: WeatherComponent) {
                         text = "°C",
                         fontSize = 32.sp,
                         fontFamily = displayFontFamily,
-                        modifier = Modifier
+                        modifier = modifier
                             .align(Alignment.CenterVertically)
                     )
                 }
                 Row(
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(top = 20.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -119,7 +122,7 @@ fun WeatherContent(component: WeatherComponent) {
                             style = MaterialTheme.typography.displayMedium
                         )
                     }
-                    Spacer(Modifier.width(20.dp))
+                    Spacer(modifier.width(20.dp))
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -144,10 +147,10 @@ fun WeatherContent(component: WeatherComponent) {
                 Image(
                     painter = painterResource(weather.current.condition.code.findIconForCode()),
                     contentDescription = "weather_image",
-                    modifier = Modifier
+                    modifier = modifier
                         .size(128.dp)
                 )
-                Spacer(Modifier.height(20.dp))
+                Spacer(modifier.height(20.dp))
                 Text(
                     text = weather.current.condition.text,
                     style = MaterialTheme.typography.displayMedium
@@ -155,7 +158,7 @@ fun WeatherContent(component: WeatherComponent) {
             }
 
             Row(
-                Modifier.fillMaxWidth(),
+                modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -164,19 +167,19 @@ fun WeatherContent(component: WeatherComponent) {
                         painter = painterResource(R.drawable.ic_sunrise),
                         contentDescription = "sunrise icon"
                     )
-                    Spacer(Modifier.width(10.dp))
+                    Spacer(modifier.width(10.dp))
                     Text(
                         text = astro.astronomy.astro.sunrise.toTimeString(),
                         style = MaterialTheme.typography.displayMedium
                     )
                 }
-                Spacer(Modifier.width(30.dp))
+                Spacer(modifier.width(30.dp))
                 Row {
                     Image(
                         painter = painterResource(R.drawable.ic_sunset),
                         contentDescription = "sunrise icon"
                     )
-                    Spacer(Modifier.width(10.dp))
+                    Spacer(modifier.width(10.dp))
                     Text(
                         text = astro.astronomy.astro.sunset.toTimeString(),
                         style = MaterialTheme.typography.displayMedium

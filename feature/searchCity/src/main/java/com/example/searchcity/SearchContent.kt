@@ -41,10 +41,11 @@ import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.common.R
+import com.example.domain.entity.City
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchContent(component: SearchCityComponent) {
+fun SearchContent(modifier: Modifier, component: SearchCityComponent) {
 
     val state by component.model.collectAsStateWithLifecycle()
 
@@ -57,12 +58,12 @@ fun SearchContent(component: SearchCityComponent) {
     }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .semantics { isTraversalGroup = true }
     ) {
         SearchBar(
-            modifier = Modifier
+            modifier = modifier
                 .align(Alignment.TopCenter)
                 .semantics {
                     traversalIndex = 0f
@@ -104,7 +105,7 @@ fun SearchContent(component: SearchCityComponent) {
             when(val searchState = state.searchState) {
                 SearchCityStore.State.SearchState.EmptyResult -> {
                     Column(
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -118,21 +119,21 @@ fun SearchContent(component: SearchCityComponent) {
                 }
                 SearchCityStore.State.SearchState.Error -> {
                     Column(
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
                             text = stringResource(R.string.something_went_wrong),
-                            modifier = Modifier.padding(8.dp)
+                            modifier = modifier.padding(8.dp)
                         )
                     }
                 }
                 SearchCityStore.State.SearchState.Initial -> {}
                 is SearchCityStore.State.SearchState.Loaded -> {
                     LazyColumn(
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxSize()
                             .background(MaterialTheme.colorScheme.primary),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -157,18 +158,19 @@ fun SearchContent(component: SearchCityComponent) {
 
 @Composable
 private fun CityCard(
-    city: com.example.domain.entity.City,
-    onCityClick: (com.example.domain.entity.City) -> Unit
+    modifier: Modifier = Modifier,
+    city: City,
+    onCityClick: (City) -> Unit
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary
         )
     ) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .clickable { onCityClick(city) }
                 .padding(
@@ -189,9 +191,9 @@ private fun CityCard(
 }
 
 @Composable
-private fun SearchCityLoading() {
+private fun SearchCityLoading(modifier: Modifier = Modifier,) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(

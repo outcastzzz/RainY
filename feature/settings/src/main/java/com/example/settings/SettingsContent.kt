@@ -22,29 +22,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.common.R
 import com.example.common.theme.TextColorAccent
 
 @Composable
-fun SettingsContent(settingsComponent: SettingsComponent) {
+fun SettingsContent(
+    modifier: Modifier,
+    component: SettingsComponent
+) {
 
     Scaffold(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
-        topBar = { SettingsTopBar { settingsComponent.onClickBack() } }
+        topBar = { SettingsTopBar { component.onClickBack() } }
     ) { paddingValues ->
 
         Column (
-            modifier = Modifier
+            modifier = modifier
                 .padding(paddingValues)
                 .background(MaterialTheme.colorScheme.primary)
         ) {
 
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxSize()
                     .padding(
                         start = 30.dp,
@@ -68,9 +70,9 @@ fun SettingsContent(settingsComponent: SettingsComponent) {
 }
 
 @Composable
-private fun About() {
+private fun About(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.Start
@@ -81,7 +83,7 @@ private fun About() {
             color = MaterialTheme.colorScheme.secondary
         )
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
         ) {
             Text(
@@ -89,7 +91,7 @@ private fun About() {
                 style = MaterialTheme.typography.displayMedium,
                 color = TextColorAccent
             )
-            Spacer(Modifier.height(5.dp))
+            Spacer(modifier.height(5.dp))
             Text(
                 text = "Read a bit more about the app.",
                 style = MaterialTheme.typography.displaySmall,
@@ -97,7 +99,7 @@ private fun About() {
             )
         }
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
         ) {
             Text(
@@ -105,7 +107,7 @@ private fun About() {
                 style = MaterialTheme.typography.displayMedium,
                 color = TextColorAccent
             )
-            Spacer(Modifier.height(5.dp))
+            Spacer(modifier.height(5.dp))
             Text(
                 text = "Get to know the team that made Weather a reality.",
                 style = MaterialTheme.typography.displaySmall,
@@ -116,9 +118,9 @@ private fun About() {
 }
 
 @Composable
-private fun Feedback() {
+private fun Feedback(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.Start
@@ -129,7 +131,7 @@ private fun Feedback() {
             color = MaterialTheme.colorScheme.secondary
         )
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
         ) {
             Text(
@@ -137,7 +139,7 @@ private fun Feedback() {
                 style = MaterialTheme.typography.displayMedium,
                 color = TextColorAccent
             )
-            Spacer(Modifier.height(5.dp))
+            Spacer(modifier.height(5.dp))
             Text(
                 text = "Facing an issue? Report and we’ll look into it.",
                 style = MaterialTheme.typography.displaySmall,
@@ -145,7 +147,7 @@ private fun Feedback() {
             )
         }
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
         ) {
             Text(
@@ -153,7 +155,7 @@ private fun Feedback() {
                 style = MaterialTheme.typography.displayMedium,
                 color = TextColorAccent
             )
-            Spacer(Modifier.height(5.dp))
+            Spacer(modifier.height(5.dp))
             Text(
                 text = "Enjoying the app? Leave a review on the App Store.",
                 style = MaterialTheme.typography.displaySmall,
@@ -163,11 +165,10 @@ private fun Feedback() {
     }
 }
 
-@Preview
 @Composable
-private fun Theme() {
+private fun Theme(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.Start
@@ -178,7 +179,7 @@ private fun Theme() {
             color = MaterialTheme.colorScheme.secondary
         )
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -188,14 +189,14 @@ private fun Theme() {
                     style = MaterialTheme.typography.displayMedium,
                     color = TextColorAccent
                 )
-                Spacer(Modifier.height(5.dp))
+                Spacer(modifier.height(5.dp))
                 Text(
                     text = "The same as in your system",
                     style = MaterialTheme.typography.displaySmall,
                     color = TextColorAccent
                 )
             }
-            Spacer(Modifier.weight(1f))
+            Spacer(modifier.weight(1f))
             Image(
                 painter = painterResource(R.drawable.ic_check),
                 contentDescription = "is true?"
@@ -207,15 +208,16 @@ private fun Theme() {
 
 @Composable
 private fun SettingsTopBar(
+    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary)
     ) {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(start = 30.dp, top = 70.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -223,7 +225,7 @@ private fun SettingsTopBar(
             IconButton(onClick = { onBackClick() } ) {
                 Image(
                     painter = painterResource(R.drawable.ic_arrow_back),
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(
                             start = 7.88.dp,
                             end = 7.88.dp,
@@ -236,7 +238,7 @@ private fun SettingsTopBar(
                     contentDescription = "go back"
                 )
             }
-            Spacer(Modifier.width(5.dp))
+            Spacer(modifier.width(5.dp))
             Text(
                 text = "Settings",
                 style = MaterialTheme.typography.displayMedium,

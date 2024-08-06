@@ -19,18 +19,21 @@ import com.example.common.ui.DetailsTextBlock
 import com.example.weather.WeatherComponent
 
 @Composable
-fun DetailsContent(component: WeatherComponent) {
+fun DetailsContent(
+    modifier: Modifier,
+    component: WeatherComponent
+) {
 
     val state by component.model.collectAsStateWithLifecycle()
     val weather = state.weather
 
     Scaffold (
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
     ) { paddingValues ->
 
         Column (
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.primary)
                 .padding(
@@ -47,7 +50,7 @@ fun DetailsContent(component: WeatherComponent) {
             )
 
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
